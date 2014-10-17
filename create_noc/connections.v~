@@ -1,0 +1,64 @@
+assign rx_data[1][3] = tx_data[0][2];
+assign tx_busy[0][2] = rx_busy[1][3];
+
+assign rx_data[0][2] = tx_data[1][3];
+assign tx_busy[1][3] = rx_busy[0][2];
+
+assign rx_data[3][3] = tx_data[2][2];
+assign tx_busy[2][2] = rx_busy[3][3];
+
+assign rx_data[2][2] = tx_data[3][3];
+assign tx_busy[3][3] = rx_busy[2][2];
+
+assign rx_data[2][0] = tx_data[0][1];
+assign tx_busy[0][1] = rx_busy[2][0];
+
+assign rx_data[0][1] = tx_data[2][0];
+assign tx_busy[2][0] = rx_busy[0][1];
+
+assign rx_data[3][0] = tx_data[1][1];
+assign tx_busy[1][1] = rx_busy[3][0];
+
+assign rx_data[1][1] = tx_data[3][0];
+assign tx_busy[3][0] = rx_busy[1][1];
+
+assign tx_busy[0][0] = 0;
+assign rx_data[0][0] = 0;
+assign tx_busy[2][1] = 0;
+assign rx_data[2][1] = 0;
+assign tx_busy[1][0] = 0;
+assign rx_data[1][0] = 0;
+assign tx_busy[3][1] = 0;
+assign rx_data[3][1] = 0;
+assign tx_busy[0][3] = 0;
+assign rx_data[0][3] = 0;
+assign tx_busy[1][2] = 0;
+assign rx_data[1][2] = 0;
+assign tx_busy[2][3] = 0;
+assign rx_data[2][3] = 0;
+assign tx_busy[3][2] = 0;
+assign rx_data[3][2] = 0;
+assign rx_data[0][4] = source_data[0];
+assign source_busy[0] = rx_busy[0][4];
+
+assign sink_data[0] = tx_data[0][4];
+assign tx_busy[0][4] = sink_busy[0];
+
+assign rx_data[1][4] = source_data[1];
+assign source_busy[1] = rx_busy[1][4];
+
+assign sink_data[1] = tx_data[1][4];
+assign tx_busy[1][4] = sink_busy[1];
+
+assign rx_data[2][4] = source_data[2];
+assign source_busy[2] = rx_busy[2][4];
+
+assign sink_data[2] = tx_data[2][4];
+assign tx_busy[2][4] = sink_busy[2];
+
+assign rx_data[3][4] = source_data[3];
+assign source_busy[3] = rx_busy[3][4];
+
+assign sink_data[3] = tx_data[3][4];
+assign tx_busy[3][4] = sink_busy[3];
+
