@@ -92,6 +92,8 @@ module fifo(clk, reset, full, empty, item_in, item_out, write, read);
 	wire actual_read = read & !empty;
 	wire actual_write = write & !full;
 	
+
+	
 	
 
 endmodule

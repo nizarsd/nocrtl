@@ -23,7 +23,7 @@
 `define TBL_DEPTH	`NUM_NODES 		//The routing table size
 `define FIFO_LOG2	 6
 // `define FIFO_DEPTH	 2^(`FIFO_LOG2)
-`define PAYLOAD_SIZE	 32
+`define PAYLOAD_SIZE	 8
 
 `define NOT_VALID	-1
 `define NOT_RESERVED 	-2

@@ -167,10 +167,6 @@ module par_router (clk, reset, rx_busy, rx_data, rx_l_data, rx_l_valid, tx_busy,
 	    end
 	endgenerate
 	
-
-	
-
-	
 	
 	//wire n_ena, n_busy, s_ena, s_busy, e_ena, e_busy, w_ena, w_busy, l_ena, l_busy;
 	

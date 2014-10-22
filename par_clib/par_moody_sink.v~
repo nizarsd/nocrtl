@@ -40,7 +40,7 @@ module moody_sink (clk, reset, data, req, busy);
 	
 		if (reset) begin
 			register <= 0;
-			busy <= 1;
+			busy <= 0;
 			rand <= 0;
 		end else begin
 			rand <= $random;

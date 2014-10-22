@@ -104,8 +104,8 @@ module source_from_memory (clk, reset, data, req, busy, send);
 			      if (can_send & send) begin
 				      
 				      if (fire) begin			
-						if (id==0) begin
-// 						if (id != dest) begin
+// 						if (id==0) begin
+						if (id != dest) begin
 						      
 						      data[`ADDR_BITS-1:0] <= dest;
 

@@ -72,7 +72,7 @@ module source_from_memory (clk, reset, data, req, busy, send);
 
 	wire can_send;
 	
-	assign can_send =!(pause | busy);
+	assign can_send =!(/*pause |*/ busy);
 	
 	always @(posedge clk or posedge reset) begin
 	
