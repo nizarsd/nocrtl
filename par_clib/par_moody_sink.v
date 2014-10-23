@@ -43,12 +43,13 @@ module moody_sink (clk, reset, data, req, busy);
 			busy <= 0;
 			rand <= 0;
 		end else begin
+			if (req & !busy) $display ("##,rx,%d,%d",id, data[`PAYLOAD_SIZE+`ADDR_BITS-1:`ADDR_BITS]);
 			rand <= $random;
 			if (req & !busy) begin
 				register <= data[`PAYLOAD_SIZE+`ADDR_BITS-1:`ADDR_BITS];
 				dest_addr <= data[`ADDR_BITS-1:0];
 // 				if (id != -1) $display ("sink %d rx  : %c <<--", id, data[`PAYLOAD_SIZE+`ADDR_BITS-1:`ADDR_BITS]);
-				if (id != -1) $display ("##,rx,%d,%d",id, data[`PAYLOAD_SIZE+`ADDR_BITS-1:`ADDR_BITS]);
+// 				if (id != -1) $display ("##,rx,%d,%d",id, data[`PAYLOAD_SIZE+`ADDR_BITS-1:`ADDR_BITS]);
 				
 				busy <= 1;
 			end else 

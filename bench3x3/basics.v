@@ -37,8 +37,8 @@ endmodule
 
 
 module generator(clk, reset, send);
-	parameter SIM_CYLES = 20000;
-	parameter COOLDOWN_CYCLES = 6000;
+	parameter SIM_CYLES = 10000;
+	parameter COOLDOWN_CYCLES = 10000;
 
 	output clk, reset, send;
 	

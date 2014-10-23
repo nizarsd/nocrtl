@@ -67,7 +67,7 @@ module source_from_memory (clk, reset, data, req, busy, send);
 	
 	wire can_send;
 	
-	assign can_send =!(/*pause |*/ busy);
+	assign can_send =!(/*pause | */busy);
 	
 	
 	
@@ -94,6 +94,9 @@ module source_from_memory (clk, reset, data, req, busy, send);
 		      
 		      if (pause) pause <=0;  // disable paused from previous send
 		      
+		      if (!busy & req) $display ("##,tx,%d,%d",id,data[`ADDR_BITS-1:0]);
+ 
+		      
 		      rand<=$random;
 		      
 		      if (/*counter == 0*/1) begin
@@ -103,7 +106,7 @@ module source_from_memory (clk, reset, data, req, busy, send);
 			      if (can_send & send) begin
 				      
 				      if (fire) begin			
-						if (/*id==0 &*/ id != dest) begin
+						if (id != dest /*& (id==1 | id==5 | id ==4)*/) begin
 						      
 						      data[`ADDR_BITS-1:0] <= dest;
 
@@ -113,9 +116,9 @@ module source_from_memory (clk, reset, data, req, busy, send);
 						      
 						      pause <= 1;
 						      
-      						      if (id != -1) $display ("##,tx,%d,%d",id,dest);
-      						      
-      						      //if (id != -1) $display ("source %d -> %d  -->>", id, dest);
+//      						      if (id != -1) $display ("##,tx,%d,%d",id,data[`ADDR_BITS-1:0]);
+    						      
+//       						      if (id != -1) $display ("source %d -> %d  -->>", id, dest);
 
 						end
 												      

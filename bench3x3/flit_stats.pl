@@ -46,25 +46,25 @@ while (<$fid>)
 $lost = $totsent-$totrec;
 
 print "Traffic stats:\n";
-# for ($j=0; $j < $n; $j++){
-#   for ($i=0; $i < $n; $i++) {
-#     if ($sent[$i][$j]!=0)
-#     {
-#       print "[$i]->[$j]=$sent[$i][$j]  \n";    
-#     }
-#   }
-#  }
-#       print " \n \n";
-# 
-# for ($j=0; $j < $n; $j++){
-#   for ($i=0; $i < $n; $i++) {
-#     if ($rec[$i][$j]!=0)
-#     {
-#       print "[$i]<-[$j]=$rec[$i][$j]  \n";
-#     }
-#   }
-# }
-#       print " \n \n";
+for ($j=0; $j < $n; $j++){
+  for ($i=0; $i < $n; $i++) {
+    if ($sent[$i][$j]!=0)
+    {
+      print "[$i]->[$j]=$sent[$i][$j]  \n";    
+    }
+  }
+ }
+      print " \n \n";
+
+for ($j=0; $j < $n; $j++){
+  for ($i=0; $i < $n; $i++) {
+    if ($sent[$i][$j]!=0)
+    {
+      print "[$i]<-[$j]=$rec[$j][$i], $sent[$i][$j]\n";
+    }
+  }
+}
+      print " \n \n";
 
 print "---------------------------\n";
 print "total:\n";

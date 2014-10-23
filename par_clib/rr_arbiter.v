@@ -43,14 +43,21 @@ always @(posedge clk or posedge reset) begin
 	  state <=  0;
 	  
     end 
-    else  begin   
+    else  begin 
+
+//  shift priority only of a grant is given    
+    if (gnt0) state <= 1;
+    else if (gnt1) state <= 2;
+    else if (gnt2) state <= 3;
+    else if (gnt3) state <= 0;
+    
       if (state==0)
 	    begin 
 		gnt0 <= req0;
 		gnt1 <= req1 & !req0;
 		gnt2 <= req2 & !req1 & !req0;
 		gnt3 <= req3 & !req2 & !req1 & !req0;
-		if (req0 | req1 | req2 | req3 ) state <= 1;
+// 		if (req0 | req1 | req2 | req3 ) state <= 1;
 	     end
         else if (state==1)
 	    begin
@@ -58,7 +65,7 @@ always @(posedge clk or posedge reset) begin
 		gnt2 <= !req1 & req2;
 		gnt3 <= !req2 & !req1 & req3;
 		gnt0 <= !req3 & !req2 & !req1 & req0;
-		if (req0 | req1 | req2 | req3 ) state <= 2;
+// 		if (req0 | req1 | req2 | req3 ) state <= 2;
 	     end
         else if (state==2)
 	    begin
@@ -66,7 +73,7 @@ always @(posedge clk or posedge reset) begin
 		gnt3 <= !req2 & req3;
 		gnt0 <= !req3 & !req2 & req0;
 		gnt1 <= !req0 & !req3 & !req2 & req1;
-		if (req0 | req1 | req2 | req3 ) state <= 3;
+// 		if (req0 | req1 | req2 | req3 )state <= 3;
 
 	    end
         else if (state==3)
@@ -75,7 +82,7 @@ always @(posedge clk or posedge reset) begin
 		gnt0 <= !req3 & req0;
 		gnt1 <= !req3 & !req0 & req1;
 		gnt2 <= !req3 & !req0 & !req1 & req2;
-		if (req0 | req1 | req2 | req3 ) state <= 0;
+// 		if (req0 | req1 | req2 | req3 ) state <= 0;
 	    end
     end
 end

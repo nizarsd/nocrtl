@@ -31,6 +31,8 @@ module fifo(clk, reset, full, empty, item_in, item_out, write, read);
 	
 	integer i;
 
+// 	assign full= (count==`FIFO_DEPTH-1);
+// 	assign empty= (count==0);
 	always @(posedge clk or posedge reset) begin
 	
 		if (reset) begin
