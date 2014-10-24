@@ -3,7 +3,7 @@
 `include "constants.v"
 `include "basics.v"
 
-`include "../par_clib/fifo.v"
+`include "../par_clib/fifo2.v"
 `include "../par_clib/tx.v"
 `include "../par_clib/routing_logic.v"
 `include "../par_clib/rx.v"

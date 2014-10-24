@@ -31,7 +31,7 @@ module fifo(clk, reset, full, empty, item_in, item_out, write, read);
 	
 	integer i;
 
-// 	assign full= (count==`FIFO_DEPTH-1);
+// 	assign full= (count==`FIFO_DEPTH);
 // 	assign empty= (count==0);
 	always @(posedge clk or posedge reset) begin
 	
@@ -58,7 +58,9 @@ module fifo(clk, reset, full, empty, item_in, item_out, write, read);
 				full <= 0;
 				
 				read_ptr <= read_ptr_p1;
-				
+
+// 				if (!write) count <= count-1;
+
 				if (read_ptr_p1 == write_ptr) empty <= 1;
 				
 				//if (routerid > -1) $display("router %d fifo pop : %d", routerid, item_out);
@@ -74,6 +76,9 @@ module fifo(clk, reset, full, empty, item_in, item_out, write, read);
 				empty <= 0;
 				
 				write_ptr <= write_ptr_p1;
+				
+
+// 				if (!read) count <= count+1;
 				
 				if (read_ptr == write_ptr_p1) full <= 1;
 		
@@ -93,7 +98,7 @@ module fifo(clk, reset, full, empty, item_in, item_out, write, read);
 	
 	wire actual_read = read & !empty;
 	wire actual_write = write & !full;
-	
+
 
 	
 	
