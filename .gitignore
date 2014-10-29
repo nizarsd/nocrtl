@@ -17,11 +17,11 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-#Linux backups
+# Linux backups
 
 *~
 
-#Linux binaries
+# Linux binaries
 
 *.out
 
@@ -31,3 +31,7 @@ $RECYCLE.BIN/
 # VCD files
 
 *.vcd
+
+# NoC Simulation dumps
+
+stats.txt
