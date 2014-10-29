@@ -20,7 +20,7 @@ module tx (clk, reset, req, tx_busy, channel_busy, parallel_in, serial_out, tx_a
 	
 	assign tx_busy = tx_active | channel_busy;
 	
-	always @(posedge clk or posedge reset) begin
+	always @(posedge clk) begin
 	
 		if (reset) begin
 		
@@ -53,7 +53,7 @@ module tx (clk, reset, req, tx_busy, channel_busy, parallel_in, serial_out, tx_a
 
 				item <= (item >> 1);
 				
-				if ((item>>1) == 1) begin
+				if ((item>>1) == 1) begin  // the last (stop bit) ?
 					
 					// end transmission when the currently transmitted bit is the last
 					

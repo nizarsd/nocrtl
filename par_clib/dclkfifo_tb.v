@@ -15,7 +15,7 @@ wire   [3:0]    item_out;
 
 
 // Connect the DUT
-  generator #(0, 4)  g0(rclk, wclk, reset, item_in, write, read);
+  generator #(2, 4)  g0(rclk, wclk, reset, item_in, write, read);
   
   dclkfifo dclkfifo0 (rclk, wclk, reset, full, empty, item_in, item_out, write, read);
   
@@ -87,27 +87,36 @@ module generator(rclk, wclk, reset, item_in, write, read);
 		
 		#1 
 		item_in = 2;
+
+		#3
+		read = 0;
+		
+		#1
+		item_in = 3;
+		
+		#3
+		read = 1;
+		
+		#1
+		item_in = 4;
 		
 		#3
 		read = 0;
 
-		#4
-		item_in = 3;
-
-		#4
-		item_in = 4;
-
-		#4
+		#1
 		item_in = 5;
 
-		#4
-		write = 0;
+// 		#4
+// 		write = 0;
 
 		#3
 		read = 1;
+		
+		#4
+		read = 0;
 
       
-		#17  $finish;
+		#28  $finish;
 	end
 
 
