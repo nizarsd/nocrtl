@@ -1,11 +1,11 @@
 `include "../constants.v"
 `include "dclk_rx.v"
-`include "tx.v"
-
+`include "dclk_tx.v"
 
 
 module top ();
 
+  
 wire            rclk;    
 wire            wclk;    
 wire            reset;    
@@ -21,7 +21,7 @@ wire  [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_in;
 
 
 // Connect the DUT
-  generator #(2, 4)  g0(rclk, wclk, reset, item_in, req, item_read);
+  generator g0(rclk, wclk, reset, item_in, req, item_read);
 
   
   dclk_rx #(2, "west")  dclk_rx0 (
@@ -34,7 +34,7 @@ wire  [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_in;
 			.serial_in(serial_in), 
 			.parallel_out(parallel_out));
 			
-  tx  #(1, "east") tx0 (.clk(wclk), 
+  dclk_tx  #(1, "east") tx0 (.clk(wclk), 
 			.reset(reset), 
 			.req(req), 
 			.tx_busy(tx_busy), 
@@ -47,13 +47,14 @@ endmodule
 
 
 module generator(rclk, wclk, reset, item_in, req, item_read);
+	parameter RCLOCK_PERIOD = 10;
+	parameter WCLOCK_PERIOD = 12;
+
+	parameter WCLOCK_PHASE = 2;
 	output  rclk, wclk,  reset, req, item_read;
 	output  [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_in;
 	
-	parameter RCLOCK_PERIOD =10;
-	parameter WCLOCK_PERIOD  =10;
-	
-	parameter WCLOCK_PHASE = 3;
+
 	
 	
 	
@@ -75,7 +76,7 @@ module generator(rclk, wclk, reset, item_in, req, item_read);
 		
 		#0 reset = 1; 
 		
-		#(RCLOCK_PERIOD) reset = 0;
+		#(RCLOCK_PERIOD*4) reset = 0;
 
 	end 
 	
@@ -85,45 +86,65 @@ module generator(rclk, wclk, reset, item_in, req, item_read);
 		
 	end
 	
+	
 	always 
 	begin
-		#1 wclk = !wclk;
-		#1 wclk =  wclk;
-		#1 wclk = !wclk;
-		#1 wclk =  wclk;
+		#(WCLOCK_PHASE)  wclk = !wclk;  
+		
+		#(WCLOCK_PERIOD/2)   wclk = !wclk;
+		
+		#((WCLOCK_PERIOD/2) - WCLOCK_PHASE);
 		
 	end
 	
-	initial $display("Start of simulation ...");
 	
 	initial
         begin
-        
+		$display("Start of simulation ...");
+	
 		$dumpfile("dclk_rx.vcd");
 	    
 		$dumpvars();
 	end
-
 	
+	// reading clock
 	initial     
 	begin
-// 		$display("Sending data ...");
+		#(RCLOCK_PERIOD*15.5)
+		item_read = 1;
+		#(RCLOCK_PERIOD)
+		item_read = 0;
 		
-		#11
+		#(RCLOCK_PERIOD*20 )
+		item_read = 1;
+		
+		#(RCLOCK_PERIOD)
+		item_read = 0;
+
+		
+	end
+
+	// writing clock
+	initial     
+	begin
+		
+		#(WCLOCK_PERIOD*5.5 + WCLOCK_PHASE)
 		item_in = 1;
 		req = 1;
 		
-		#4
+		#(WCLOCK_PERIOD)
 		req = 0;
 		
-		#31
-		item_read = 1;
+		#(WCLOCK_PERIOD*15)
+		item_in = 2;
+		req = 1;
 		
-		#4
-		item_read = 0;
+		#(WCLOCK_PERIOD)
+		req = 0;
 		
-      
-		#(RCLOCK_PERIOD*50)  $finish;
+		#(RCLOCK_PERIOD*40)  
+		$display("Finished simulation.");
+		$finish;
 	end
 
 
