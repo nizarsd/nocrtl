@@ -99,7 +99,7 @@ module source_from_memory (clk, reset, data, req, busy, send);
 		      
 		rand<=$random;
 		
-	        if (!busy & req) $display ("##,tx,%d,%d",id,data[`ADDR_BITS-1:0]);
+	        if (!busy & req) $display ("##,tx,%d,%d",data[`ADDR_BITS-1:0],id);
  	
 		if (pause) pause <=0;
 		      	      

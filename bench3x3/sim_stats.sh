@@ -2,10 +2,13 @@
 clear
 
 if [ "$1" = "-p" ]
-then
+  then
     iverilog testbenchrr3x3_par.v
-else
-    iverilog testbenchrr3x3.v
+elif [ "$1" = "-a" ]
+  then
+      iverilog testbench_async.v
+else 
+iverilog testbenchrr3x3.v
 fi
 
 

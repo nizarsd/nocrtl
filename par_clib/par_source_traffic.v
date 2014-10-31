@@ -94,19 +94,19 @@ module source_from_memory (clk, reset, data, req, busy, send);
 		      
 		      if (pause) pause <=0;  // disable paused from previous send
 		      
-		      if (!busy & req) $display ("##,tx,%d,%d",id,data[`ADDR_BITS-1:0]);
+		      if (!busy & req) $display ("##,tx,%d,%d",data[`ADDR_BITS-1:0],id);
  
-		      
 		      rand<=$random;
 		      
 		      if (/*counter == 0*/1) begin
 
-			      
       //  		if (!busy & send & !done) begin
 			      if (can_send & send) begin
 				      
-				      if (fire) begin			
-						if (id != dest /*& (id==1 | id==5 | id ==4)*/) begin
+				      if (fire) begin		
+				      
+						if (id != dest /*&  (id==1 |  id==3 | id==5 | id ==7)*/) begin
+// 						if ((dest == 3 &  id == 5) |  (dest == 5 &  id == 3) | (dest == 4 &  (id == 3 | id == 5)) ) begin
 						      
 						      data[`ADDR_BITS-1:0] <= dest;
 

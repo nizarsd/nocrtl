@@ -1,14 +1,14 @@
 
 use Switch;
-$n=16;
-$ydim=4;
+$n=9;
+$ydim=3;
 
 $file = $ARGV[0];
 $totsent=0;
 $totrec=0;
 $rec[$n][$n]=0;
 $sent[$n][$n]=0;
-
+$dlost[$n][$n]=0;
 open($fid, $file) or die("can not open file '$file'\n");
 
 while (<$fid>)
@@ -46,23 +46,26 @@ while (<$fid>)
 $lost = $totsent-$totrec;
 
 print "Traffic stats:\n";
+# for ($j=0; $j < $n; $j++){
+#   for ($i=0; $i < $n; $i++) {
+#     if ($sent[$i][$j]!=0)
+#     {
+#       print "[$j]->[$i]=$sent[$i][$j]  \n";    
+#     }
+#   }
+#  }
+#       print " \n \n";
+$k=0;
 for ($j=0; $j < $n; $j++){
   for ($i=0; $i < $n; $i++) {
     if ($sent[$i][$j]!=0)
     {
-      print "[$i]->[$j]=$sent[$i][$j]  \n";    
+    $k++;
+      $dlost[$i][$j] = $sent[$i][$j] - $rec[$i][$j];
+      print "$k - [$j]->[$i]=$sent[$i][$j], [$i]<-[$j]=$rec[$i][$j], $dlost[$i][$j]\n";
     }
   }
- }
-      print " \n \n";
-
-for ($j=0; $j < $n; $j++){
-  for ($i=0; $i < $n; $i++) {
-    if ($sent[$i][$j]!=0)
-    {
-      print "[$i]<-[$j]=$rec[$j][$i], $sent[$i][$j]\n";
-    }
-  }
+  print " \n";
 }
       print " \n \n";
 

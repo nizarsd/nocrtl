@@ -1,0 +1,5 @@
+#!/bin/bash
+
+clear
+
+perl create_topology.pl > network.arc && perl create_connections2.pl network.arc > connections.v

@@ -108,10 +108,10 @@ module routing_logic(	clk, reset,
 	assign l_w_req = !l_empty & (l_table_data == `WEST) & !w_busy;
 	
 	// requests to the local channel
-	assign n_l_req = !n_empty & (n_table_data == `LOCAL) & !l_busy;
-	assign e_l_req = !e_empty & (e_table_data == `LOCAL) & !l_busy;
-	assign s_l_req = !s_empty & (s_table_data == `LOCAL) & !l_busy;
-	assign w_l_req = !w_empty & (w_table_data == `LOCAL) & !l_busy;
+	assign n_l_req = !n_empty & (n_table_data == `LOCAL) & !l_busy & !n_l_gnt ;
+	assign e_l_req = !e_empty & (e_table_data == `LOCAL) & !l_busy & !e_l_gnt ;
+	assign s_l_req = !s_empty & (s_table_data == `LOCAL) & !l_busy & !s_l_gnt ;
+	assign w_l_req = !w_empty & (w_table_data == `LOCAL) & !l_busy & !w_l_gnt ;
 
 	
 	// enables of serial tx

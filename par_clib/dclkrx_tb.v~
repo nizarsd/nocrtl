@@ -110,12 +110,12 @@ module generator(rclk, wclk, reset, item_in, req, item_read);
 	// reading clock
 	initial     
 	begin
-		#(RCLOCK_PERIOD*15.5)
+		#(RCLOCK_PERIOD*24.5)
 		item_read = 1;
 		#(RCLOCK_PERIOD)
 		item_read = 0;
 		
-		#(RCLOCK_PERIOD*20 )
+		#(RCLOCK_PERIOD*24 )
 		item_read = 1;
 		
 		#(RCLOCK_PERIOD)
@@ -135,14 +135,14 @@ module generator(rclk, wclk, reset, item_in, req, item_read);
 		#(WCLOCK_PERIOD)
 		req = 0;
 		
-		#(WCLOCK_PERIOD*15)
+		#(WCLOCK_PERIOD*20)
 		item_in = 2;
 		req = 1;
 		
 		#(WCLOCK_PERIOD)
 		req = 0;
 		
-		#(RCLOCK_PERIOD*40)  
+		#(RCLOCK_PERIOD*100)  
 		$display("Finished simulation.");
 		$finish;
 	end
