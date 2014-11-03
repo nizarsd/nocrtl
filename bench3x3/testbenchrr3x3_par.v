@@ -5,7 +5,7 @@
 
 `include "../par_clib/fifo2.v"
 `include "../par_clib/tx.v"
-`include "../par_clib/routing_logic.v"
+`include "../par_clib/routing_logic_v2.v"
 `include "../par_clib/rx.v"
 `include "../par_clib/par_rx.v"
 `include "../par_clib/par_tx.v"

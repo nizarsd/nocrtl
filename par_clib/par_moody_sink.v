@@ -34,25 +34,23 @@ module moody_sink (clk, reset, data, req, busy);
 	
 	reg busy;
 	
-	reg [7:0] rand;
+// 	reg [7:0] rand;
 	
 	always @(posedge clk or posedge reset) begin
 	
 		if (reset) begin
 			register <= 0;
 			busy <= 0;
-			rand <= 0;
+// 			rand <= 0;
 		end else begin
-// 			if (req & !busy) $display ("##,rx,%d,%d",id, data[`PAYLOAD_SIZE+`ADDR_BITS-1:`ADDR_BITS]);
-			rand <= $random;
+// 			rand <= $random;
 			if (req & !busy) begin
 				register <= data[`PAYLOAD_SIZE+`ADDR_BITS-1:`ADDR_BITS];
 				dest_addr <= data[`ADDR_BITS-1:0];
-// 				if (id != -1) $display ("sink %d rx  : %c <<--", id, data[`PAYLOAD_SIZE+`ADDR_BITS-1:`ADDR_BITS]);
 				if (id != -1) $display ("##,rx,%d,%d",id, data[`PAYLOAD_SIZE+`ADDR_BITS-1:`ADDR_BITS]);
-				if (id != data[`ADDR_BITS-1:0]) $display ("*****rx violation in %d, %d -> %d @ %d",id, data[`PAYLOAD_SIZE+`ADDR_BITS-1:`ADDR_BITS],data[`ADDR_BITS-1:0],$time );
+// 				if (id != data[`ADDR_BITS-1:0]) $display ("*****rx violation in %d, %d -> %d @ %d",id, data[`PAYLOAD_SIZE+`ADDR_BITS-1:`ADDR_BITS],data[`ADDR_BITS-1:0],$time );
 				
-// 				busy <= 1;
+				busy <= 1;
 			end else 
 			busy <= 0;//(rand > hospitality);
 		end			

@@ -2,8 +2,8 @@
 // `define NUM_NODES 9
 
 module async_gen(clk, reset, send);
-	parameter SIM_CYLES = 10000;
-	parameter COOLDOWN_CYCLES = 5000;
+	parameter SIM_CYLES = 1000;
+	parameter COOLDOWN_CYCLES = 1500;
 
 	output [`NUM_NODES-1 : 0] clk;
 	output reset, send;
@@ -115,7 +115,7 @@ module async_gen(clk, reset, send);
         begin
 		$display("Start of simulation ...");
 		
-		$dumpfile("dclk_rx.vcd");
+		$dumpfile("dump3x3.vcd");
 		
 		$dumpvars();
 		
