@@ -16,8 +16,8 @@ wire		item_read;
 wire 		req;
 wire 		tx_active;
 
-wire  [`PAYLOAD_SIZE+`ADDR_BITS-1:0] parallel_out;  
-wire  [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_in;  
+wire  [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] parallel_out;  
+wire  [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] item_in;  
 
 
 // Connect the DUT
@@ -52,14 +52,14 @@ module generator(rclk, wclk, reset, item_in, req, item_read);
 
 	parameter RCLOCK_PHASE =0;
 	output  rclk, wclk,  reset, req, item_read;
-	output  [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_in;
+	output  [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] item_in;
 	
 
 	
 	
 	
 	reg rclk, wclk,  reset, req, item_read;
-	reg [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_in;
+	reg [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] item_in;
 	
 	initial 
 	begin 

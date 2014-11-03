@@ -12,9 +12,9 @@ module par_rx_logic(item_out, write, full,
 
 	output busy;
 
-	input [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_in;
+	input [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] item_in;
 	
-	output [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_out;
+	output [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] item_out;
 
 	assign item_out = item_in;
 	

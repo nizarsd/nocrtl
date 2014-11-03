@@ -5,11 +5,11 @@ module par_rx (clk, reset, channel_busy, item_in, item_read, parallel_out);
 
 	input clk, reset, item_read;
 	
-	input [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_in;
+	input [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] item_in;
 		
 	output  channel_busy;	
 	
-	output [`PAYLOAD_SIZE+`ADDR_BITS-1:0] parallel_out;
+	output [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] parallel_out;
 	
 	assign parallel_out = item_in;
 	

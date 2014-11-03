@@ -25,13 +25,13 @@ module routing_logic(	clk, reset,
 	output n_ena,   e_ena,   s_ena,   w_ena,   l_ena;
 	
 	
-	input  [`PAYLOAD_SIZE+`ADDR_BITS-1:0] n_item_in, e_item_in, s_item_in, w_item_in, l_item_in;
+	input  [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] n_item_in, e_item_in, s_item_in, w_item_in, l_item_in;
 	
-	output [`PAYLOAD_SIZE+`ADDR_BITS-1:0] n_item_out, e_item_out, s_item_out, w_item_out, l_item_out;
+	output [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] n_item_out, e_item_out, s_item_out, w_item_out, l_item_out;
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_in [0:`DIRECTIONS-1];
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] item_in [0:`DIRECTIONS-1];
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_out [0:`DIRECTIONS-1];
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] item_out [0:`DIRECTIONS-1];
 	
 	wire [0:`DIRECTIONS-1] ena;
 	
@@ -59,7 +59,7 @@ module routing_logic(	clk, reset,
 	assign w_item_out = item_out[`WEST]; 
 	assign l_item_out = item_out[`LOCAL];
 	
-	wire  [`ADDR_BITS-1:0] table_addr [0:`DIRECTIONS-1];
+	wire  [`ADDR_SZ-1:0] table_addr [0:`DIRECTIONS-1];
 	
 	wire [`BITS_DIR-1:0]  table_data [0:`DIRECTIONS-1];
 	
@@ -75,7 +75,7 @@ module routing_logic(	clk, reset,
 	generate
 	
 	  for(i=0; i<`DIRECTIONS; i=i+1) begin: table_addresses
-		assign table_addr[i] = item_in[i][`ADDR_BITS-1:0];
+		assign table_addr[i] = item_in[i][`ADDR_SZ-1:0];
 	  end
 	  
 	  // routing tables
@@ -95,14 +95,14 @@ module routing_logic(	clk, reset,
 				      gnt_v[`NORTH][i] | 
 				      gnt_v[`EAST] [i] | 
 				      gnt_v[`SOUTH][i] | 
-				      gnt_v[`WEST][i] | 
+				      gnt_v[`WEST] [i] | 
 				      gnt_v[`LOCAL][i];
 		    
     		    assign read[i] =  
 				      gnt_v[i][`NORTH] |
 				      gnt_v[i][`EAST]  |
 				      gnt_v[i][`SOUTH] | 
-				      gnt_v[i][`WEST] | 
+				      gnt_v[i][`WEST]  | 
 				      gnt_v[i][`LOCAL];
 
 	  end

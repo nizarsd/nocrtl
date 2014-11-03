@@ -42,8 +42,8 @@ wire clk,reset;
 	
 	wire  rx_l_valid [`NUM_NODES-1:0];
 	wire  tx_l_valid [`NUM_NODES-1:0];
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0]  rx_l_data [`NUM_NODES-1:0];
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0]  tx_l_data [`NUM_NODES-1:0];
+	wire [`HDR_SZ+`ADDR_SZ-1:0]  rx_l_data [`NUM_NODES-1:0];
+	wire [`HDR_SZ+`ADDR_SZ-1:0]  tx_l_data [`NUM_NODES-1:0];
 	
 	
 	wire  router_active [`NUM_NODES-1:0];
@@ -71,7 +71,7 @@ wire clk,reset;
 	// routing tables:
 	// -----------------------------------------------------------------	
 	
-	wire [`ADDR_BITS-1:0] table_addr [`NUM_NODES-1:0];
+	wire [`ADDR_SZ-1:0] table_addr [`NUM_NODES-1:0];
 	
 	wire [`BITS_DIR-1:0] table_data [`NUM_NODES-1:0];
 	
@@ -86,7 +86,7 @@ wire clk,reset;
 	// sources:
 	// -----------------------------------------------------------------
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] source_data [`NUM_NODES-1:0];
+	wire [`HDR_SZ+`ADDR_SZ-1:0] source_data [`NUM_NODES-1:0];
 	
 	wire source_busy [`NUM_NODES-1:0];
 	
@@ -112,7 +112,7 @@ wire clk,reset;
 	// sinks:
 	// -----------------------------------------------------------------
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] sink_data [`NUM_NODES-1:0];
+	wire [`HDR_SZ+`ADDR_SZ-1:0] sink_data [`NUM_NODES-1:0];
 	
 	wire sink_busy [`NUM_NODES-1:0];
 		

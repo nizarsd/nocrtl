@@ -19,6 +19,7 @@ module rr_router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, flit_counter);
 	input  [`DIRECTIONS-1:0] tx_busy;
 	output [`DIRECTIONS-1:0] tx_data;
 	
+	assign rx_busy = {rx_l_busy, rx_w_busy,  rx_s_busy, rx_e_busy, rx_n_busy};
 	
 	assign rx_n_data = rx_data[`NORTH];
 	assign rx_e_data = rx_data[`EAST ];
@@ -26,8 +27,6 @@ module rr_router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, flit_counter);
 	assign rx_w_data = rx_data[`WEST ];
 	assign rx_l_data = rx_data[`LOCAL];
 	
-	assign rx_busy = {rx_l_busy, rx_w_busy,  rx_s_busy, rx_e_busy, rx_n_busy};
-
 	assign tx_n_busy = tx_busy[`NORTH];
 	assign tx_e_busy = tx_busy[`EAST ];
 	assign tx_s_busy = tx_busy[`SOUTH];
@@ -43,18 +42,18 @@ module rr_router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, flit_counter);
 	
 	//output  link_tx_n_data;
 	
-	output [`ADDR_BITS-1:0] table_addr;
+	output [`ADDR_SZ-1:0] table_addr;
 	
 	input [`BITS_DIR-1:0] table_data;
 	
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] fifo_item_in[`DIRECTIONS-1:0];
+	wire [`HDR_SZ+`ADDR_SZ-1:0] fifo_item_in[`DIRECTIONS-1:0];
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] fifo_item_out[`DIRECTIONS-1:0];
+	wire [`HDR_SZ+`ADDR_SZ-1:0] fifo_item_out[`DIRECTIONS-1:0];
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item[`DIRECTIONS-1:0];
+	wire [`HDR_SZ+`ADDR_SZ-1:0] item[`DIRECTIONS-1:0];
 
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] rr_item_out[`DIRECTIONS-1:0];
+	wire [`HDR_SZ+`ADDR_SZ-1:0] rr_item_out[`DIRECTIONS-1:0];
 
 	
 	wire tx_active [`DIRECTIONS-1:0];

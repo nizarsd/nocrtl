@@ -7,7 +7,7 @@ module serial_source (clk, reset, serial_out, busy, pir);
 	input [7:0] pir;
 	output serial_out;
 	
-	wire [`ADDR_BITS-1:0] data;
+	wire [`ADDR_SZ-1:0] data;
 	
 	source #(.DEST_ID(DEST_ID), .NODE_ID(NODE_ID)) s1 (clk, reset, data, req, tx_busy, pir);
 	
@@ -25,10 +25,10 @@ module source (clk, reset, data, req, busy, pir);
 	
 	output req;
 
-	output [`ADDR_BITS-1:0] data;
+	output [`ADDR_SZ-1:0] data;
 
 	
-	reg [`ADDR_BITS-1:0] data;
+	reg [`ADDR_SZ-1:0] data;
 	
 	reg [7:0] counter;
 	

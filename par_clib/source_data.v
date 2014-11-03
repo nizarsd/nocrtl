@@ -15,7 +15,7 @@ module serial_source_from_memory (clk, reset, serial_out, busy, send);
 	
 	wire tx_active;
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] data;
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] data;
 	
 	source_from_memory #(id, dests, pir, traffic_file) s1 (clk, reset, data, req, tx_busy, send);
 	
@@ -40,9 +40,9 @@ module source_from_memory (clk, reset, data, req, busy, send);
 	
 	output req;
 	
-	output [`PAYLOAD_SIZE+`ADDR_BITS-1:0] data;
+	output [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] data;
 	
-	reg [`PAYLOAD_SIZE+`ADDR_BITS-1:0] data;
+	reg [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] data;
 	
 	reg counter;
 	
@@ -60,13 +60,13 @@ module source_from_memory (clk, reset, data, req, busy, send);
 	
 	reg [7:0] rand;
 	
-	reg [`ADDR_BITS-1:0] memory [0:`NUM_NODES-1];
-	reg [`PAYLOAD_SIZE-1:0] dmemory [0:msg_size-1];
+	reg [`ADDR_SZ-1:0] memory [0:`NUM_NODES-1];
+	reg [`HDR_SZ-1:0] dmemory [0:msg_size-1];
 	
 	initial $readmemh(traffic_file, memory, 0, dests-1) ;
 	initial $readmemh("data2.hex", dmemory, 0, msg_size-1) ;
 	
-	wire [`ADDR_BITS-1:0] dest;
+	wire [`ADDR_SZ-1:0] dest;
 	
 	assign dest=memory[index];
 
@@ -102,50 +102,50 @@ module source_from_memory (clk, reset, data, req, busy, send);
 		if (pause) pause <=0;
 		      	      
        		if (can_send & send & !done) begin
-// 			      if (can_send & send) begin
-				      
-				      
-				      if (fire) begin			
-						if (id==0 & dest != id/*& (dest==15 | dest ==11)*/) begin
+// 		if (can_send & send) begin
+		      
+		      
+		      if (fire) begin			
+				if (id==0 & dest != id/*& (dest==15 | dest ==11)*/) begin
 // 						if (id!=dest) begin
-						      
-						      data[`ADDR_BITS-1:0] <= dest;
+				      
+				      data[`ADDR_SZ-1:0] <= dest;
 
-						      data[`PAYLOAD_SIZE+`ADDR_BITS-1:`ADDR_BITS]<=dmemory[dindex];
-						
-						      req <= 1;
-						      
-						      pause <=1;
-      						      
-      						      if (id != -1) $display ("##,tx,%d,%d",id,dest);
-      						      
-						      if (id != -1) $display ("source %d -> %d: %c  -->>", id, dest, dmemory[dindex]);
-						
-						end
-												      
-						 counter <= counter + 1;
-						      
-						 index <= index + 1;
-						 
-						
-						if (index == dests-1) begin
-						    
-						    index <=0;
-						    
-						    dindex <= dindex + 1;
-						    
-						    if (dindex == msg_size-1) done <= 1;
-						    
-						end
-					      
-				      end
-					      
-			      end // busy
-			      else begin
+				      data[`HDR_SZ + `PL_SZ + `ADDR_SZ-1:`PL_SZ + `ADDR_SZ]<=dmemory[dindex];
+				
+				      req <= 1;
+				      
+				      pause <=1;
+				      
+				      if (id != -1) $display ("##,tx,%d,%d",id,dest);
+				      
+				      if (id != -1) $display ("source %d -> %d: %c  -->>", id, dest, dmemory[dindex]);
+				
+				end
+										      
+				  counter <= counter + 1;
+				      
+				  index <= index + 1;
+				  
+				
+				if (index == dests-1) begin
+				    
+				    index <=0;
+				    
+				    dindex <= dindex + 1;
+				    
+				    if (dindex == msg_size-1) done <= 1;
+				    
+				end
+			      
+		      end
+			      
+	      end // busy
+	      else begin
 
-				  req <= 0;
-			      end
-			      fire <= 1; //(rand < pir);
+		  req <= 0;
+	      end
+	      fire <= 1; //(rand < pir);
 			
 		end //else reset
 	

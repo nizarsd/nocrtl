@@ -2,7 +2,7 @@ module routing_table(reset, table_addr, table_data);
 
 	parameter NODE_ID=0;
  	input reset;
-	input [`ADDR_BITS-1:0] table_addr;
+	input [`ADDR_SZ-1:0] table_addr;
 	output [`BITS_DIR-1:0] table_data;
 	
 	reg [`BITS_DIR-1:0] mem [`NUM_NODES-1:0];

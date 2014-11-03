@@ -57,7 +57,7 @@ wire clk,reset;
 	// routing tables:
 	// -----------------------------------------------------------------	
 	
-	wire [`ADDR_BITS-1:0] table_addr [`NUM_NODES-1:0];
+	wire [`ADDR_SZ-1:0] table_addr [`NUM_NODES-1:0];
 	
 	wire [`BITS_DIR-1:0] table_data [`NUM_NODES-1:0];
 	genvar rt;

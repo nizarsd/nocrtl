@@ -5,12 +5,12 @@ module tx_logic (item_in, read, empty, table_addr, table_data, item_out, n_ena, 
 	
 	output read, s_ena, n_ena, e_ena, w_ena, l_ena;
 	
-	input [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_in;
-	output [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_out;
-	output [`ADDR_BITS-1:0] table_addr;
+	input [`HDR_SZ+`ADDR_SZ-1:0] item_in;
+	output [`HDR_SZ+`ADDR_SZ-1:0] item_out;
+	output [`ADDR_SZ-1:0] table_addr;
 	input [`BITS_DIR-1:0] table_data;
 	
-	assign table_addr = item_in[`ADDR_BITS-1:0];
+	assign table_addr = item_in[`ADDR_SZ-1:0];
 	
 	assign item_out = item_in;
 
@@ -44,11 +44,11 @@ module tx_logic_channels(
 	
 	output n_ena, e_ena, s_ena, w_ena, l_ena;
 	
-	input  [`PAYLOAD_SIZE+`ADDR_BITS-1:0] n_intem_in, e_item_in, s_item_in, w_item_in, l_item_in;
+	input  [`HDR_SZ+`ADDR_SZ-1:0] n_intem_in, e_item_in, s_item_in, w_item_in, l_item_in;
 	
-	output [`PAYLOAD_SIZE+`ADDR_BITS-1:0] n_item_out, e_item_out, s_item_out, w_item_out, l_item_out;
+	output [`HDR_SZ+`ADDR_SZ-1:0] n_item_out, e_item_out, s_item_out, w_item_out, l_item_out;
 	
-	wire [`ADDR_BITS-1:0] n_table_addr, e_table_addr, s_table_addr, w_table_addr, l_table_addr;
+	wire [`ADDR_SZ-1:0] n_table_addr, e_table_addr, s_table_addr, w_table_addr, l_table_addr;
 	
 	wire [`BITS_DIR-1:0]  n_table_data, e_table_data, s_table_data, w_table_data, l_table_data ;
 	
@@ -67,11 +67,11 @@ module tx_logic_channels(
 	wire n_w_gnt, e_w_gnt, s_w_gnt, l_w_gnt;
 	wire n_l_gnt, e_l_gnt, s_l_gnt, w_l_gnt;
 	
-	assign n_table_addr = n_item_in[`ADDR_BITS-1:0];
-	assign e_table_addr = e_item_in[`ADDR_BITS-1:0];
-	assign s_table_addr = s_item_in[`ADDR_BITS-1:0];
-	assign w_table_addr = w_item_in[`ADDR_BITS-1:0];
-	assign l_table_addr = l_item_in[`ADDR_BITS-1:0];
+	assign n_table_addr = n_item_in[`ADDR_SZ-1:0];
+	assign e_table_addr = e_item_in[`ADDR_SZ-1:0];
+	assign s_table_addr = s_item_in[`ADDR_SZ-1:0];
+	assign w_table_addr = w_item_in[`ADDR_SZ-1:0];
+	assign l_table_addr = l_item_in[`ADDR_SZ-1:0];
 	
 	
 	

@@ -8,13 +8,13 @@ module tx (clk, reset, req, tx_busy, channel_busy, parallel_in, serial_out, tx_a
 	
 	output tx_busy, serial_out;
 	
-	input [`PAYLOAD_SIZE+`ADDR_BITS-1:0] parallel_in;
+	input [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] parallel_in;
 	
 	output reg tx_active;
 	
-	reg [`PAYLOAD_SIZE+`ADDR_BITS+1:0] item;
+	reg [`HDR_SZ + `PL_SZ + `ADDR_SZ+1:0] item;
 	
-	reg [`PAYLOAD_SIZE+`ADDR_BITS-1:0] temp;
+	reg [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] temp;
 	
 	assign serial_out = item[0] & tx_active;
 	
@@ -38,14 +38,14 @@ module tx (clk, reset, req, tx_busy, channel_busy, parallel_in, serial_out, tx_a
 			
 					tx_active <= 1;
 					
-					item[`PAYLOAD_SIZE+`ADDR_BITS:1] <= parallel_in;
+					item[`HDR_SZ + `PL_SZ + `ADDR_SZ:1] <= parallel_in;
 					temp <= parallel_in;
-					item[`PAYLOAD_SIZE+`ADDR_BITS+1] <= 1;
+					item[`HDR_SZ + `PL_SZ + `ADDR_SZ+1] <= 1;
 					item[0] <= 1;
 					
 					//if (!tx_active && (routerid > -1)) $display("router %d %s tx : %d", routerid, port, parallel_in);
 					
-					//item <= {1'b1, parallel_in[`ADDR_BITS-1:0], 1'b1}; // leading one is the start bit of the flit
+					//item <= {1'b1, parallel_in[`ADDR_SZ-1:0], 1'b1}; // leading one is the start bit of the flit
 					
 				end
 			

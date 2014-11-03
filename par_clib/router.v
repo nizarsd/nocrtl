@@ -40,17 +40,17 @@ module router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, table_addr, table
 	
 	//output  link_tx_n_data;
 	
-	output [`ADDR_BITS-1:0] table_addr;
+	output [`ADDR_SZ-1:0] table_addr;
 	
 	input [`BITS_DIR-1:0] table_data;
 	
 	//wire full, empty;	
 
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] fifo_item_in;
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] fifo_item_in;
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] fifo_item_out;
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] fifo_item_out;
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] tx_item_out;
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] tx_item_out;
 
 	wire read, write;
 	
@@ -64,11 +64,11 @@ module router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, table_addr, table
 	// RX :
 	// -----------------------------------------------------------------
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] n_item;
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] s_item;
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] e_item;
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] w_item;
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] l_item;	
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] n_item;
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] s_item;
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] e_item;
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] w_item;
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] l_item;	
 	wire tx_active [`DIRECTIONS-1:0];
 	
 	rx #(routerid,"north") rx_n

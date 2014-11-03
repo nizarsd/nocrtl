@@ -42,18 +42,18 @@ module paraller_router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, flit_cou
 	
 	//output  link_tx_n_data;
 	
-	output [`ADDR_BITS-1:0] table_addr;
+	output [`ADDR_SZ-1:0] table_addr;
 	
 	input [`BITS_DIR-1:0] table_data;
 	
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] fifo_item_in[`DIRECTIONS-1:0];
+	wire [`HDR_SZ+`ADDR_SZ-1:0] fifo_item_in[`DIRECTIONS-1:0];
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] fifo_item_out[`DIRECTIONS-1:0];
+	wire [`HDR_SZ+`ADDR_SZ-1:0] fifo_item_out[`DIRECTIONS-1:0];
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item[`DIRECTIONS-1:0];
+	wire [`HDR_SZ+`ADDR_SZ-1:0] item[`DIRECTIONS-1:0];
 
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] rr_item_out[`DIRECTIONS-1:0];
+	wire [`HDR_SZ+`ADDR_SZ-1:0] rr_item_out[`DIRECTIONS-1:0];
 
 	
 	wire tx_active [`DIRECTIONS-1:0];

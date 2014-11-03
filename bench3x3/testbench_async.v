@@ -5,8 +5,8 @@
 `include "../par_clib/routing_logic_v2.v"
 `include "../par_clib/par_rx.v"
 `include "../par_clib/par_tx.v"
-`include "../par_clib/par_source_traffic.v"
-// `include "../par_clib/par_source_data.v"
+// `include "../par_clib/par_source_traffic.v"
+`include "../par_clib/par_source_data.v"
 `include "../par_clib/par_rx_logic.v"
 `include "../par_clib/par_moody_sink.v"
 `include "../par_clib/routing_table_logic.v"	
@@ -40,8 +40,8 @@ module testbench();
 	
 	wire  rx_l_valid [`NUM_NODES-1:0];
 	wire  tx_l_valid [`NUM_NODES-1:0];
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0]  rx_l_data [`NUM_NODES-1:0];
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0]  tx_l_data [`NUM_NODES-1:0];
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  rx_l_data [`NUM_NODES-1:0];
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  tx_l_data [`NUM_NODES-1:0];
 	
 	
 	wire  router_active [`NUM_NODES-1:0];
@@ -96,7 +96,7 @@ module testbench();
 	// routing tables:
 	// -----------------------------------------------------------------	
 	
-	wire [`ADDR_BITS-1:0] table_addr [`NUM_NODES-1:0];
+	wire [`ADDR_SZ-1:0] table_addr [`NUM_NODES-1:0];
 	
 	wire [`BITS_DIR-1:0] table_data [`NUM_NODES-1:0];
 	
@@ -111,7 +111,7 @@ module testbench();
 	// sources:
 	// -----------------------------------------------------------------
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] source_data [`NUM_NODES-1:0];
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] source_data [`NUM_NODES-1:0];
 	
 	wire source_busy [`NUM_NODES-1:0];
 	
@@ -137,7 +137,7 @@ module testbench();
 	// sinks:
 	// -----------------------------------------------------------------
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] sink_data [`NUM_NODES-1:0];
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] sink_data [`NUM_NODES-1:0];
 	
 	wire sink_busy [`NUM_NODES-1:0];
 		

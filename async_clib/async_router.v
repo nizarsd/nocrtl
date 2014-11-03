@@ -33,8 +33,8 @@ module async_router (
 	input  [`DIRECTIONS-1:0] tx_busy;
 	output [`DIRECTIONS-2:0] tx_data;
 	
-	input [`PAYLOAD_SIZE+`ADDR_BITS-1:0]  rx_l_data;  // parallel for local port
-	output [`PAYLOAD_SIZE+`ADDR_BITS-1:0]  tx_l_data;  
+	input [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  rx_l_data;  // parallel for local port
+	output [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  tx_l_data;  
 
 	output  tx_l_valid;
 	
@@ -70,18 +70,18 @@ module async_router (
 	
 	//output  link_tx_n_data;
 	
-	output [`ADDR_BITS-1:0] table_addr;
+	output [`ADDR_SZ-1:0] table_addr;
 	
 	input [`BITS_DIR-1:0] table_data;
 	
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] fifo_item_in[`DIRECTIONS-1:0];
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] fifo_item_in[`DIRECTIONS-1:0];
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] fifo_item_out[`DIRECTIONS-1:0];
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] fifo_item_out[`DIRECTIONS-1:0];
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item[`DIRECTIONS-1:0];
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] item[`DIRECTIONS-1:0];
 
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] rr_item_out[`DIRECTIONS-1:0];
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] rr_item_out[`DIRECTIONS-1:0];
 
 	
 	wire tx_active [`DIRECTIONS-1:0];

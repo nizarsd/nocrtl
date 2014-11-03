@@ -8,11 +8,11 @@ module dclk_rx (rclk, wclk, reset, valid, channel_busy, item_read, serial_in, pa
 	
 	output valid, channel_busy;	
 	
-	output [`PAYLOAD_SIZE+`ADDR_BITS-1:0] parallel_out;
+	output [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] parallel_out;
 	
 	reg [1:0] state; // 0 = idle, 1 = receiving, 2 = delivering item
 	
-	reg [`PAYLOAD_SIZE+`ADDR_BITS:0] item;
+	reg [`HDR_SZ + `PL_SZ + `ADDR_SZ:0] item;
 	
 	reg [1:0] valid_reg;
 	
@@ -83,9 +83,9 @@ module dclk_rx (rclk, wclk, reset, valid, channel_busy, item_read, serial_in, pa
 			
 				// continue receiving and shifting
 			
-				item[`PAYLOAD_SIZE+`ADDR_BITS-1:0] <= item [`PAYLOAD_SIZE+`ADDR_BITS:1];
+				item[`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] <= item [`HDR_SZ + `PL_SZ + `ADDR_SZ:1];
 				
-				item[`PAYLOAD_SIZE+`ADDR_BITS] <= serial_in;
+				item[`HDR_SZ + `PL_SZ + `ADDR_SZ] <= serial_in;
 				
 				if (item[0]) begin
 					state <= 2; // item received when LSB is 1

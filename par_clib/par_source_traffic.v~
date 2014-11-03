@@ -10,11 +10,11 @@ module par_source_from_memory (clk, reset, item_out, valid, busy, send);
 	
 	input clk, reset, busy, send;
 		
-	output [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_out;
+	output [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] item_out;
 	
 	output valid;
 
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] data;
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] data;
 	
 	source_from_memory #(id, dests, pir, traffic_file) s1 (clk, reset, data, req, busy, send);
 	
@@ -37,9 +37,9 @@ module source_from_memory (clk, reset, data, req, busy, send);
 	
 	output req;
 	
-	output [`PAYLOAD_SIZE+`ADDR_BITS-1:0] data;
+	output [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] data;
 	
-	reg [`PAYLOAD_SIZE+`ADDR_BITS-1:0] data;
+	reg [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] data;
 	
 	reg counter;
 	
@@ -55,13 +55,13 @@ module source_from_memory (clk, reset, data, req, busy, send);
 
 	reg [7:0] rand;
 	
-	reg [`ADDR_BITS-1:0] memory [`NUM_NODES-1:0];
+	reg [`ADDR_SZ-1:0] memory [`NUM_NODES-1:0];
 	
 // 	reg can_send;
 	
 	initial $readmemh(traffic_file, memory, 0, dests-1) ;
 	
-	wire [`ADDR_BITS-1:0] dest;
+	wire [`ADDR_SZ-1:0] dest;
 	
 	assign dest=memory[index];
 	
@@ -94,7 +94,7 @@ module source_from_memory (clk, reset, data, req, busy, send);
 		      
 		      if (pause) pause <=0;  // disable paused from previous send
 		      
-		      if (!busy & req) $display ("##,tx,%d,%d",data[`ADDR_BITS-1:0],id);
+		      if (!busy & req) $display ("##,tx,%d,%d",data[`ADDR_SZ-1:0],id);
  
 		      rand<=$random;
 		      
@@ -105,18 +105,17 @@ module source_from_memory (clk, reset, data, req, busy, send);
 				      
 				      if (fire) begin		
 				      
-						if (id != dest /*&  (id==1 |  id==3 | id==5 | id ==7)*/) begin
-// 						if ((dest == 3 &  id == 5) |  (dest == 5 &  id == 3) | (dest == 4 &  (id == 3 | id == 5)) ) begin
+						if (id != dest) begin
 						      
-						      data[`ADDR_BITS-1:0] <= dest;
+						      data[`ADDR_SZ-1:0] <= dest;
 
-						      data[`PAYLOAD_SIZE+`ADDR_BITS-1:`ADDR_BITS]<=id;
+						      data[`PL_SZ + `ADDR_SZ-1:`ADDR_SZ]  <= id;
 						
 						      req <= 1;
 						      
 						      pause <= 1;
 						      
-//      						      if (id != -1) $display ("##,tx,%d,%d",id,data[`ADDR_BITS-1:0]);
+//      						      if (id != -1) $display ("##,tx,%d,%d",id,data[`ADDR_SZ-1:0]);
     						      
 //       						      if (id != -1) $display ("source %d -> %d  -->>", id, dest);
 
