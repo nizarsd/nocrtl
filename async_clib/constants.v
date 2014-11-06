@@ -17,7 +17,7 @@
 `define ADDR_SZ		 4 				// node address size (bits) 
 `define X_BITS		 2 			// 2^X_BITS is the X_DIM 
 `define Y_BITS		 2 			// 2^Y_BITS is the Y_DIM
-`define RT_BITS		 `ADRR_BITS
+`define RT_BITS		 `ADDR_SZ
 `define NUM_DESTS	 9
 
 `define TBL_DEPTH	 `NUM_NODES 		//The routing table size

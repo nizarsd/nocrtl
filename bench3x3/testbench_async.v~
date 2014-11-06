@@ -9,7 +9,7 @@
 `include "../par_clib/par_source_data.v"
 `include "../par_clib/par_rx_logic.v"
 `include "../par_clib/par_moody_sink.v"
-`include "../par_clib/routing_table_logic.v"	
+`include "../par_clib/routing_table.v"	
 `include "../par_clib/rr_arbiter.v"
 `include "../par_clib/ch_rx_logic.v"
 

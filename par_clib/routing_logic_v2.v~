@@ -82,7 +82,7 @@ module routing_logic(	clk, reset,
 
 	  for(i=0; i<`DIRECTIONS; i=i+1) begin: rtables
 	  
-	      routing_table #(id,table_file) rtable (table_addr[i], table_data[i]);
+	      routing_table #(id) rtable (reset, table_addr[i], table_data[i]);
 	      
 	  end
 	  

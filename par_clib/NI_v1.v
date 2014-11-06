@@ -1,8 +1,8 @@
-module NI(clk, reset, item_out, req, channel_busy, send, item_in, valid, busy, error, led);
+module NI(clk, reset, item_out, req, channel_busy, send_en, item_in, valid, busy, error, led);
     
     parameter id = -1;
     
-    input clk, reset, channel_busy, valid, send;
+    input clk, reset, channel_busy, valid, send_en;
     
     output req, busy, error, led;
     
@@ -74,8 +74,8 @@ module NI(clk, reset, item_out, req, channel_busy, send, item_in, valid, busy, e
 	      // receive 
 	    if (valid & !busy & !done) begin
 		  
-// 		    if (counter[`PL_SZ-15] &&  id==0) begin
-		    if (counter[`PL_SZ-22] &&  id==0) begin
+		    if (counter[`PL_SZ-15] &&  id==0) begin
+// 		    if (counter[`PL_SZ-22] &&  id==0) begin
 
 		    
 			  $display ("counter = %d, time = %d, id=%d", counter, $time, id);
@@ -94,7 +94,7 @@ module NI(clk, reset, item_out, req, channel_busy, send, item_in, valid, busy, e
 			  
 // 			  if (started & id==0) $display ("##rx %d:  %d,%d @%d",id, counter, item_in[`PL_SZ + `ADDR_SZ-1:`ADDR_SZ], $time);
 
-			  if (started & id==0 & !(counter < data_in)) error <= 1;
+			  if (started & id==0 & !((data_in - counter)==1)) error <= 1;
 		    
 		    end
 		    
@@ -104,11 +104,11 @@ module NI(clk, reset, item_out, req, channel_busy, send, item_in, valid, busy, e
       
 	      end 
 	      
-//	       process and send 
+//	       process and send_en 
 
 // 	      if (!channel_busy & req) $display ("##,tx,%d,%d @ %d",item_out[`ADDR_SZ-1:0],id,$time );
 	      
-	      if (!channel_busy & send) begin
+	      if (!channel_busy & send_en) begin
 	      
 		    if (busy | (id==0 & !started)) begin
 			    

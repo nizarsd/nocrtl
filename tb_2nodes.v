@@ -72,7 +72,7 @@ module testbench();
 			.item_out(source_data[0]), 
 			.req(source_valid[0]), 
 			.channel_busy(source_busy[0]), 
-			.send(send), 
+			.send_en(send), 
 			.item_in(sink_data[0]), 
 			.valid(sink_valid[0]), 
 			.busy(sink_busy[0])
@@ -84,7 +84,7 @@ module testbench();
 			.item_out(source_data[1]), 
 			.req(source_valid[1]), 
 			.channel_busy(source_busy[1]), 
-			.send(send), 
+			.send_en(send), 
 			.item_in(sink_data[1]), 
 			.valid(sink_valid[1]), 
 			.busy(sink_busy[1])

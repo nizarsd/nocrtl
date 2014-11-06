@@ -13,9 +13,9 @@ module par_tx (clk, reset, req, tx_busy, channel_busy, parallel_in, item_out, va
 	output valid;
 
 	
-	input [`HDR_SZ+`ADDR_SZ-1:0] parallel_in;
+	input [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] parallel_in;
 	
-	output [`HDR_SZ+`ADDR_SZ-1:0] item_out;
+	output [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] item_out;
 	
 	assign item_out = parallel_in;
 	

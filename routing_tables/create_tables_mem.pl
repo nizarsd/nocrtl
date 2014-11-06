@@ -8,7 +8,8 @@ $LOCAL	=	4;
 
 $w	=	3;
 $h	=	3;
-
+$s	=	0;
+open ($fid, ">rt.txt");
 
 for ($j=0; $j<$h; $j++)
 {
@@ -17,9 +18,9 @@ for ($j=0; $j<$h; $j++)
 	
 		$s 	= 	$j * $w + $i;
 		
-		print "$s\n";
+# 		print "$s\n";
 
-		open ($fid, ">$s.txt");
+	print $fid "if (NODE_ID == $s) begin \n";
 
 		for ($y=0; $y<$h; $y++)
 		{
@@ -29,34 +30,35 @@ for ($j=0; $j<$h; $j++)
 				#print "$d = $x,$y ";
 				if ($d == $s)
 				{
-					print $fid "$LOCAL\n";
+					print $fid "	mem[$d] <= $LOCAL;\n";
 				}
 				elsif ($x == $i)
 				{
 					if ($y>$j)
 					{
-						print $fid "$SOUTH\n";
+						print $fid "	mem[$d] <= $SOUTH;\n";
 					}
 					else
 					{
-						print $fid "$NORTH\n";
+						print $fid "	mem[$d] <= $NORTH;\n";
 					}	
 				}
 				else
 				{
 					if ($x>$i)
 					{
-						print $fid "$EAST\n";
+						print $fid "	mem[$d] <= $EAST;\n";
 					}
 					else
 					{
-						print $fid "$WEST\n";
+						print $fid "	mem[$d] <= $WEST;\n";
 					}
 				}
 			}
 		}
 
-		close ($fid);
+# 		close ($fid);
+	print $fid "end	 \nelse ";
 
 	}
 }
