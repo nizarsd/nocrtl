@@ -1,6 +1,8 @@
-module NI(clk, reset, item_out, req, channel_busy, send_en, item_in, valid, busy, error, led);
+module NI(id, clk, reset, item_out, req, channel_busy, send_en, item_in, valid, busy, error, led);
     
-    parameter id = -1;
+//     parameter id = -1;
+        
+    input [`ADDR_SZ-1:0] id;
     
     input clk, reset, channel_busy, valid, send_en;
     

@@ -7,7 +7,7 @@
 
 module dclkfifo(rclk, wclk, reset, full, empty, item_in, item_out, write, read);
 
-	parameter routerid=-1;
+// 	parameter routerid=-1;
 	parameter DCLK_FIFO_DSIZE = 4;
 
 	input rclk, wclk, reset, write, read;
@@ -65,7 +65,7 @@ module dclkfifo(rclk, wclk, reset, full, empty, item_in, item_out, write, read);
 			    
 // 			if (!read) count <= count+1;
 
-			if (routerid > -1) $display("router %d fifo push : %d", routerid, item_in);
+			$display("router %d fifo push : %d", routerid, item_in);
 
 		    end
 		
@@ -94,7 +94,7 @@ module dclkfifo(rclk, wclk, reset, full, empty, item_in, item_out, write, read);
 
 // 				if (!write) count <= count-1;
 				
-				if (routerid > -1) $display("router %d fifo pop : %d", routerid, item_out);
+				$display("router %d fifo pop : %d", routerid, item_out);
 			
 			end 
 

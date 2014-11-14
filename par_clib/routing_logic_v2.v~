@@ -3,17 +3,17 @@
 // Nizar Dahir 2014
 //----------------------------------------------------
 
-module routing_logic(	clk, reset,
+module routing_logic(  clk, reset,
 			n_item_in, n_read, n_empty, n_item_out, n_ena, n_busy,
 			e_item_in, e_read, e_empty, e_item_out, e_ena, e_busy,
 			s_item_in, s_read, s_empty, s_item_out, s_ena, s_busy,
 			w_item_in, w_read, w_empty, w_item_out, w_ena, w_busy,
 			l_item_in, l_read, l_empty, l_item_out, l_ena, l_busy
 			);
-	parameter id=-1;
+	parameter routerid=-1;
 	
 	parameter table_file ="";
-	
+
 	input clk, reset;
 	
 	input  n_empty, e_empty, s_empty, w_empty, l_empty; 
@@ -82,7 +82,7 @@ module routing_logic(	clk, reset,
 
 	  for(i=0; i<`DIRECTIONS; i=i+1) begin: rtables
 	  
-	      routing_table #(id) rtable (reset, table_addr[i], table_data[i]);
+	      routing_table  #(routerid,table_file)  rtable (table_addr[i], table_data[i]);
 	      
 	  end
 	  

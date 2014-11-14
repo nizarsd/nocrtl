@@ -1,7 +1,7 @@
 
 module dclk_tx (clk, reset, req, tx_busy, channel_busy, parallel_in, serial_out, tx_active);
 
-	parameter routerid=-1;
+// 	parameter routerid=-1;
 	parameter port="unknown";
 
 	input clk, reset, req, channel_busy;
@@ -52,10 +52,6 @@ module dclk_tx (clk, reset, req, tx_busy, channel_busy, parallel_in, serial_out,
 					temp <= parallel_in;
 					item[`HDR_SZ + `PL_SZ + `ADDR_SZ+1] <= 1;
 					item[0] <= 1;
-					
-					//if (!tx_active && (routerid > -1)) $display("router %d %s tx : %d", routerid, port, parallel_in);
-					
-					//item <= {1'b1, parallel_in[`ADDR_SZ-1:0], 1'b1}; // leading one is the start bit of the flit
 					
 				end
 			

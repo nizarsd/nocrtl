@@ -5,7 +5,7 @@
 
 module fifo(clk, reset, full, empty, item_in, item_out, write, read);
 
-	parameter routerid=-1;
+// 	parameter routerid=-1;
 
 	input clk, reset, write, read;
 	
@@ -63,7 +63,7 @@ module fifo(clk, reset, full, empty, item_in, item_out, write, read);
 
 				if (read_ptr_p1 == write_ptr) empty <= 1;
 				
-				//if (routerid > -1) $display("router %d fifo pop : %d", routerid, item_out);
+				//if  $display("router %d fifo pop : %d", routerid, item_out);
 			
 			end 
 			
@@ -71,7 +71,7 @@ module fifo(clk, reset, full, empty, item_in, item_out, write, read);
 			
 				mem [write_ptr] <= item_in;
 				
-				//if (routerid > -1) $display("router %d fifo push : %d", routerid, item_in);
+				//if  $display("router %d fifo push : %d", routerid, item_in);
 				
 				empty <= 0;
 				

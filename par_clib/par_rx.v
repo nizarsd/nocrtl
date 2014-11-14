@@ -1,6 +1,6 @@
 
 module par_rx (clk, reset, channel_busy, item_in, item_read, parallel_out);
-	parameter routerid=-1;
+// 	parameter routerid=-1;
 	parameter port="unknown";
 
 	input clk, reset, item_read;

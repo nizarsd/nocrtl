@@ -1,14 +1,15 @@
-module routing_table(reset, table_addr, table_data);
+module routing_table(id, reset, table_addr, table_data);
 
-	parameter NODE_ID=0;
+// 	parameter id=0;
  	input reset;
-	input [`ADDR_SZ-1:0] table_addr;
+ 	input [`ADDR_SZ-1:0] id;
+ 	input [`ADDR_SZ-1:0] table_addr;
 	output [`BITS_DIR-1:0] table_data;
 	
 	reg [`BITS_DIR-1:0] mem [`NUM_NODES-1:0];
 	
 always @(posedge reset) begin
-	if (NODE_ID == 0) begin 
+	if (id == 0) begin 
 		mem[0] <= 4;
 		mem[1] <= 1;
 		mem[2] <= 1;
@@ -19,7 +20,7 @@ always @(posedge reset) begin
 		mem[7] <= 1;
 		mem[8] <= 1;
 	end	 
-	else if (NODE_ID == 1) begin 
+	else if (id == 1) begin 
 		mem[0] <= 3;
 		mem[1] <= 4;
 		mem[2] <= 1;
@@ -30,7 +31,7 @@ always @(posedge reset) begin
 		mem[7] <= 2;
 		mem[8] <= 1;
 	end	 
-	else if (NODE_ID == 2) begin 
+	else if (id == 2) begin 
 		mem[0] <= 3;
 		mem[1] <= 3;
 		mem[2] <= 4;
@@ -41,7 +42,7 @@ always @(posedge reset) begin
 		mem[7] <= 3;
 		mem[8] <= 2;
 	end	 
-	else if (NODE_ID == 3) begin 
+	else if (id == 3) begin 
 		mem[0] <= 0;
 		mem[1] <= 1;
 		mem[2] <= 1;
@@ -52,7 +53,7 @@ always @(posedge reset) begin
 		mem[7] <= 1;
 		mem[8] <= 1;
 	end	 
-	else if (NODE_ID == 4) begin 
+	else if (id == 4) begin 
 		mem[0] <= 3;
 		mem[1] <= 0;
 		mem[2] <= 1;
@@ -63,7 +64,7 @@ always @(posedge reset) begin
 		mem[7] <= 2;
 		mem[8] <= 1;
 	end	 
-	else if (NODE_ID == 5) begin 
+	else if (id == 5) begin 
 		mem[0] <= 3;
 		mem[1] <= 3;
 		mem[2] <= 0;
@@ -74,7 +75,7 @@ always @(posedge reset) begin
 		mem[7] <= 3;
 		mem[8] <= 2;
 	end	 
-	else if (NODE_ID == 6) begin 
+	else if (id == 6) begin 
 		mem[0] <= 0;
 		mem[1] <= 1;
 		mem[2] <= 1;
@@ -85,7 +86,7 @@ always @(posedge reset) begin
 		mem[7] <= 1;
 		mem[8] <= 1;
 	end	 
-	else if (NODE_ID == 7) begin 
+	else if (id == 7) begin 
 		mem[0] <= 3;
 		mem[1] <= 0;
 		mem[2] <= 1;
@@ -96,7 +97,7 @@ always @(posedge reset) begin
 		mem[7] <= 4;
 		mem[8] <= 1;
 	end	 
-	else if (NODE_ID == 8) begin 
+	else if (id == 8) begin 
 		mem[0] <= 3;
 		mem[1] <= 3;
 		mem[2] <= 0;

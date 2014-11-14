@@ -14,7 +14,7 @@
 `define Y_DIM		3
 `define NUM_NODES     	9
 
-`define ADDR_SZ	4 				// node address size (bits) 
+`define ADDR_SZ		4 			// node address size (bits) 
 `define X_BITS		2 			// 2^X_BITS is the X_DIM 
 `define Y_BITS		2 			// 2^Y_BITS is the Y_DIM
 `define RT_BITS		`ADRR_BITS

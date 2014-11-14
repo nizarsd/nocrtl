@@ -1,32 +1,36 @@
 `timescale 1ns/1ns
 
-`include "async_clib/constants.v"
-`include "par_clib/fifo.v"
-`include "par_clib/routing_logic_v2.v"
+`include "constants.v"
+`include "../par_clib/fifo.v"
+`include "../par_clib/routing_logic_v2.v"
 // `include "par_clib/par_rx.v"
 // `include "par_clib/par_tx.v"
 // `include "par_clib/par_source_traffic.v"
 // `include "par_clib/par_source_data.v"
-`include "par_clib/par_rx_logic.v"
+`include "../par_clib/par_rx_logic.v"
 // `include "par_clib/par_moody_sink.v"
-`include "par_clib/routing_table_logic.v"	
-`include "par_clib/rr_arbiter.v"
-`include "par_clib/ch_rx_logic.v"
-`include "par_clib/NI_v1.v"
+`include "../par_clib/routing_table.v"	
+`include "../par_clib/rr_arbiter.v"
+`include "../par_clib/ch_rx_logic.v"
+`include "../par_clib/NI_v1.v"
 
-`include "async_clib/dclk_rx.v"
-`include "async_clib/dclk_tx.v"
-`include "async_clib/async_router.v"
-`include "async_clib/async_generator.v"
+`include "dclk_rx.v"
+`include "dclk_tx.v"
+`include "async_router.v"
+// `include "async_generator.v"
 
 	
 module node_wrapper(
 		    id,
-		    
 		    reset, 
 		    en,
 		    clk, 
-		    txclk, 
+		    
+    		    txclk_n,
+		    txclk_e,
+		    txclk_s,
+		    txclk_w,
+
 		    wclk_n,
 		    wclk_e,
 		    wclk_s,
@@ -58,19 +62,22 @@ module node_wrapper(
 		    ); 
 
 // 	wire reset, clk;
-		
+
 	output rx_busy_w, rx_busy_s,rx_busy_e, rx_busy_n;
 	input  rx_data_w, rx_data_s,rx_data_e, rx_data_n;
 	input  tx_busy_w, tx_busy_s,tx_busy_e, tx_busy_n;
 	output tx_data_w, tx_data_s,tx_data_e, tx_data_n;
 	
 	input clk, wclk_n, wclk_e, wclk_s, wclk_w, reset, en;
-	output txclk, led, error;
+	output txclk_n, txclk_e, txclk_s, txclk_w, led, error;
+	
+	input [`ADDR_SZ-1:0] id;
 	
 	wire [`DIRECTIONS-1:0] rx_busy;
 	wire [`DIRECTIONS-2:0] rx_data;
 	wire [`DIRECTIONS-1:0] tx_busy;
 	wire [`DIRECTIONS-2:0] tx_data;
+	
 	
 	wire  rx_valid_l;
 	wire  tx_valid_l;
@@ -107,7 +114,14 @@ module node_wrapper(
 	
 	assign wclk = {wclk_n, wclk_e, wclk_s, wclk_w};
 	
-	assign txclk = clk;
+	wire txclk;
+	
+	assign txclk_n = txclk;
+	assign txclk_e = txclk;
+	assign txclk_s = txclk;
+	assign txclk_w = txclk;
+	
+	
 	
 	assign rx_data_l  = source_data;
 	assign rx_valid_l = source_valid;
@@ -119,8 +133,8 @@ module node_wrapper(
 	
 	// router
 	
-	async_router  #(id) router0 (
-	
+	async_router  router0 (
+		      .id(id),
 		      .clk(clk),
 		      .wclk(wclk), 
 		      .clk_fw(txclk),
@@ -139,8 +153,8 @@ module node_wrapper(
 
 	// Network in interface  
 	  
-	  NI #(id) NI0 (
-	  
+	  NI	NI0 (
+		      .id(id),
 		      .clk(clk), 
 		      .reset(reset), 
 		      .item_out(source_data), 

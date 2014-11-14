@@ -1,5 +1,5 @@
 // globally-ascynchronous-locally synchronous router, uses different clocks for each direction.
-module async_router (
+module async_router (id,
 		     clk,    // local clock
 		     wclk, // tx clock from the n, e, s, w
 		     clk_fw, // forward clock to rx ports
@@ -14,9 +14,9 @@ module async_router (
 		     tx_l_valid,
 		     flit_counter);
 
-	parameter routerid=-1;
+// 	parameter routerid=-1;
 	
-	parameter table_file ="";
+// 	parameter table_file ="";
 	
 	// Ports:
 	// -----------------------------------------------------------------
@@ -27,12 +27,13 @@ module async_router (
 	// bit 2 : south
 	// bit 3 : west
 	// bit 4 : local
+	input [`ADDR_SZ-1:0] id;
 	
 	output [`DIRECTIONS-1:0] rx_busy;
 	input  [`DIRECTIONS-2:0] rx_data;
 	input  [`DIRECTIONS-1:0] tx_busy;
 	output [`DIRECTIONS-2:0] tx_data;
-	
+		
 	input [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  rx_l_data;  // parallel for local port
 	output [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  tx_l_data;  
 
@@ -70,10 +71,6 @@ module async_router (
 	
 	//output  link_tx_n_data;
 	
-	output [`ADDR_SZ-1:0] table_addr;
-	
-	input [`BITS_DIR-1:0] table_data;
-	
 	
 	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] fifo_item_in[`DIRECTIONS-1:0];
 	
@@ -110,7 +107,7 @@ module async_router (
 	// -----------------------------------------------------------------
 
 	
-	dclk_rx #(routerid,"north") rx_n
+	dclk_rx #("north") rx_n
 	(
 		.rclk(clk),.wclk(wclk[`NORTH]), .reset(reset),
 		.channel_busy(rx_n_busy), .serial_in (rx_n_data),
@@ -118,14 +115,14 @@ module async_router (
 	);
 		 
  
-	dclk_rx #(routerid,"east") rx_e
+	dclk_rx #("east") rx_e
 	(
 		.rclk(clk),.wclk(wclk[`EAST]), .reset(reset),
 		.channel_busy(rx_e_busy), .serial_in (rx_e_data),
 		.valid(valid[`EAST]), .parallel_out(item[`EAST]), .item_read(item_read[`EAST])
 	);
 	
-	dclk_rx #(routerid,"south") rx_s
+	dclk_rx #("south") rx_s
 	(
 		.rclk(clk),.wclk(wclk[`SOUTH]), .reset(reset),
 		.channel_busy(rx_s_busy), .serial_in (rx_s_data),
@@ -133,14 +130,14 @@ module async_router (
 	);
 			 
 	
-	dclk_rx #(routerid,"west") rx_w
+	dclk_rx #("west") rx_w
 	(
 		.rclk(clk),.wclk(wclk[`WEST]), .reset(reset),
 		.channel_busy(rx_w_busy), .serial_in (rx_w_data),
 		.valid(valid[`WEST]), .parallel_out(item[`WEST]), .item_read(item_read[`WEST])
 	);	
 		 
-// 	rx #(routerid,"local") rx_l
+// 	rx #("local") rx_l
 // 	(
 // 		.clk(clk), .reset(reset),
 // 		.channel_busy(rx_l_busy), .serial_in (rx_l_data),
@@ -177,7 +174,7 @@ module async_router (
 	
 
 	    for (channel = 0; channel < `DIRECTIONS; channel = channel + 1) begin: fifos
-		  fifo #(routerid) myfifo(
+		  fifo  myfifo(
 		  
 			.clk(clk), .reset(reset),
 			.full(full[channel]), .empty(empty[channel]),
@@ -189,24 +186,10 @@ module async_router (
 	endgenerate
 	
 	
-	//wire n_ena, n_busy, s_ena, s_busy, e_ena, e_busy, w_ena, w_busy, l_ena, l_busy;
-	
-// 	tx_logic tx_logic1 
-// 	(
-// 		.item_in(fifo_item_out), .read(read), .empty(empty),
-// 		.table_addr(table_addr), .table_data(table_data),
-// 		.item_out(tx_item_out),
-// 		.n_ena(n_ena), .n_busy(n_busy),
-// 		.s_ena(s_ena), .s_busy(s_busy),
-// 		.e_ena(e_ena), .e_busy(e_busy),
-// 		.w_ena(w_ena), .w_busy(w_busy),
-// 		.l_ena(l_ena), .l_busy(l_busy)
-// 	);
 
-	
-
-       routing_logic #(routerid,table_file) rr_routing_logic(
-		.clk(clk), .reset(reset),
+//        routing_logic #(routerid,table_file) rr_routing_logic(
+       routing_logic routing_logic0 (
+		.id(id), .clk(clk), .reset(reset),
 		.n_item_in(fifo_item_out[`NORTH]), .n_read(read[`NORTH]), .n_empty(empty[`NORTH]), .n_item_out(rr_item_out[`NORTH]), .n_ena(n_ena), .n_busy(n_busy),
 		.e_item_in(fifo_item_out[`EAST ]), .e_read(read[`EAST ]), .e_empty(empty[`EAST ]), .e_item_out(rr_item_out[`EAST ]), .e_ena(e_ena), .e_busy(e_busy),
 		.s_item_in(fifo_item_out[`SOUTH]), .s_read(read[`SOUTH]), .s_empty(empty[`SOUTH]), .s_item_out(rr_item_out[`SOUTH]), .s_ena(s_ena), .s_busy(s_busy),
@@ -218,7 +201,7 @@ module async_router (
 	// TX :
 	// -----------------------------------------------------------------	
 	
-	dclk_tx #(routerid,"north") tx_n
+	dclk_tx #("north") tx_n
 	(
 		.clk(clk), .reset(reset), .tx_active(tx_active[`NORTH]),
 		.req(n_ena), .tx_busy(n_busy),
@@ -227,7 +210,7 @@ module async_router (
 	);
 	
 
-	dclk_tx #(routerid,"east") tx_e
+	dclk_tx #("east") tx_e
 	(
 		.clk(clk), .reset(reset),.tx_active(tx_active[`EAST]),
 		.req(e_ena), .tx_busy(e_busy),
@@ -235,7 +218,7 @@ module async_router (
 		.parallel_in(rr_item_out[`EAST])
 	);
 	
-	dclk_tx #(routerid,"south") tx_s
+	dclk_tx #("south") tx_s
 	(
 		.clk(clk), .reset(reset),.tx_active(tx_active[`SOUTH]),
 		.req(s_ena), .tx_busy(s_busy),
@@ -243,7 +226,7 @@ module async_router (
 		.parallel_in(rr_item_out[`SOUTH])
 	);
 	
-	dclk_tx #(routerid,"west") tx_w
+	dclk_tx #("west") tx_w
 	(
 		.clk(clk), .reset(reset), .tx_active(tx_active[`WEST]),
 		.req(w_ena), .tx_busy(w_busy),

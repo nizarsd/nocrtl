@@ -1,7 +1,7 @@
 
 module dclk_rx (rclk, wclk, reset, valid, channel_busy, item_read, serial_in, parallel_out);
 
-	parameter routerid=-1;
+// 	parameter routerid=-1;
 	parameter port="unknown";
 
 	input rclk, wclk, reset, item_read, serial_in;
@@ -18,7 +18,7 @@ module dclk_rx (rclk, wclk, reset, valid, channel_busy, item_read, serial_in, pa
 	
 	wire validw;
 	
-	assign parallel_out = item;
+	assign parallel_out = item[`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0];
 	
 	assign validw = (state == 2);
 	
@@ -89,7 +89,6 @@ module dclk_rx (rclk, wclk, reset, valid, channel_busy, item_read, serial_in, pa
 				
 				if (item[0]) begin
 					state <= 2; // item received when LSB is 1
-					//if (routerid > -1) $display("router %d %s rx : %d", routerid, port, item >> 1);
 				end
 			
 			end 
