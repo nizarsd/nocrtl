@@ -21,20 +21,21 @@
 	
 	reg [1:0] valid_reg;
 	
-	reg validw;
+	reg validd;
 	
 	// assign parallel_out = item;
 	
-	// assign validw = (state == 2);
+	// assign validd = (state == 2);
 	
 	assign valid =  valid_reg[1];  // synchronised to rclk
 	
 	
-	// assign channel_busy = (state != 0);
+// 	assign channel_busy = (state != 0);
 	
 	 always @(posedge rclk or negedge reset) begin
 	
-		valid_reg[0] <= validw;  // synchronise "valid" to rclk
+		valid_reg[0] <= validd;  // synchronise "valid" to rclk
+		
 		valid_reg[1] <= valid_reg[0];
 		
 	
@@ -48,8 +49,6 @@
 		    
 		end else begin
 		
-		    channel_busy <= (state != 0);
-	
 		
 		    if (state == 2 & item_read) begin
 		    
@@ -59,8 +58,12 @@
 			    
 			    item <= 0;
 			    
-			    valid_reg <= 0 ;
+			    channel_busy <= 0;
 			    
+    			    validd <= 0;
+    			    
+    			    valid_reg <= 0 ;
+
 		    end
 		
 		end
@@ -72,21 +75,29 @@
 	
 		if (reset) begin
 
-			item <= 0;
+			//item <= 0;
 			
-			state <= 0;
+			//state <= 0;
 			
-			validw <= 0;
+			validd <= 0;
+			
+			channel_busy <= 0;
 			
 		end else begin
 		
-			validw <= (state == 2);
+			parallel_out <= item [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0];
 			
 			if (state == 0 & serial_in) begin
 			
 				// transition from 'idle' to 'receiving' on arrival of flit head (high bit)
 			
-				state <= 1;				
+				state <= 1;
+				
+				channel_busy <= 1;
+				
+				item[`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] <= item [`HDR_SZ + `PL_SZ + `ADDR_SZ:1];
+				
+				item[`HDR_SZ + `PL_SZ + `ADDR_SZ] <= serial_in;
 			
 			end else if (state == 1) begin
 			
@@ -100,7 +111,9 @@
 				
 					state <= 2; // item received when LSB is 1
 					
-					parallel_out <= item [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0];
+// 					parallel_out <= item [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0];
+					
+					validd <= 1;
 					
 				end
 			

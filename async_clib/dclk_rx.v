@@ -1,6 +1,6 @@
 
 module dclk_rx (rclk, wclk, reset, valid, channel_busy, item_read, serial_in, parallel_out);
-
+ 	`include "constants.v"
 // 	parameter routerid=-1;
 	parameter port="unknown";
 
@@ -16,11 +16,11 @@ module dclk_rx (rclk, wclk, reset, valid, channel_busy, item_read, serial_in, pa
 	
 	reg [1:0] valid_reg;
 	
-	wire validw;
+	wire validd;
 	
 	assign parallel_out = item[`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0];
 	
-	assign validw = (state == 2);
+	assign validd = (state == 2);
 	
 	assign valid =  valid_reg[1];  // synchronised to rclk
 	
@@ -29,7 +29,8 @@ module dclk_rx (rclk, wclk, reset, valid, channel_busy, item_read, serial_in, pa
 	
 	always @(posedge rclk) begin
 	
-		valid_reg[0] <= validw;  // synchronise "valid" to rclk
+		valid_reg[0] <= validd;  // synchronise "valid" to rclk
+		
 		valid_reg[1] <= valid_reg[0];
 		
 	
@@ -88,7 +89,9 @@ module dclk_rx (rclk, wclk, reset, valid, channel_busy, item_read, serial_in, pa
 				item[`HDR_SZ + `PL_SZ + `ADDR_SZ] <= serial_in;
 				
 				if (item[0]) begin
+				
 					state <= 2; // item received when LSB is 1
+					
 				end
 			
 			end 

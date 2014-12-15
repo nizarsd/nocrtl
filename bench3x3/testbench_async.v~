@@ -15,8 +15,7 @@
 `include "../par_clib/ch_rx_logic.v"
 
 
-// `include "../async_clib/dclk_rx.v"
-`include "../async_clib/dclk_rx.v"
+`include "../async_clib/dclk_rx4.v"
 `include "../async_clib/dclk_tx.v"
 `include "../async_clib/async_router.v"
 `include "../async_clib/async_generator.v"
@@ -30,7 +29,6 @@ module testbench();
 	parameter SINK_HOSP=255; // sink hospitality 0-255
 	parameter DESTS =9;
 	parameter traffic_file="../traffic/1.txt";
-
 		
 	// routers:
 	// -----------------------------------------------------------------
@@ -45,12 +43,9 @@ module testbench();
 	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  rx_l_data [`NUM_NODES-1:0];
 	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  tx_l_data [`NUM_NODES-1:0];
 	
-	
-	wire  router_active [`NUM_NODES-1:0];
+	wire router_active [`NUM_NODES-1:0];
 	wire [19:0] flit_counter [`NUM_NODES-1:0];
-	
-	
-	
+
 // 	clocks 
 	
 	wire [`DIRECTIONS-2:0] wclk [`NUM_NODES-1:0];
@@ -127,13 +122,21 @@ module testbench();
 // 	endgenerate
 // 	
 	par_source_from_memory #(0, DESTS, PIR, traffic_file) source0 (clk[0], reset, source_data[0], source_valid[0], source_busy[0], send);
+	
 	par_source_from_memory #(1, DESTS, PIR, traffic_file) source1 (clk[1], reset, source_data[1], source_valid[1], source_busy[1], send);
+	
 	par_source_from_memory #(2, DESTS, PIR, traffic_file) source2 (clk[2], reset, source_data[2], source_valid[2], source_busy[2], send);
+	
 	par_source_from_memory #(3, DESTS, PIR, traffic_file) source3 (clk[3], reset, source_data[3], source_valid[3], source_busy[3], send);
+	
 	par_source_from_memory #(4, DESTS, PIR, traffic_file) source4 (clk[4], reset, source_data[4], source_valid[4], source_busy[4], send);
+	
 	par_source_from_memory #(5, DESTS, PIR, traffic_file) source5 (clk[5], reset, source_data[5], source_valid[5], source_busy[5], send);
+	
 	par_source_from_memory #(6, DESTS, PIR, traffic_file) source6 (clk[6], reset, source_data[6], source_valid[6], source_busy[6], send);
+	
 	par_source_from_memory #(7, DESTS, PIR, traffic_file) source7 (clk[7], reset, source_data[7], source_valid[7], source_busy[7], send);
+	
 	par_source_from_memory #(8, DESTS, PIR, traffic_file) source8 (clk[8], reset, source_data[8], source_valid[8], source_busy[8], send);
 
 	// sinks:

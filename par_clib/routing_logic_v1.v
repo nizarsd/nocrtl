@@ -165,15 +165,15 @@
 	
 	// Craossbar switch
 
-	assign n_item_out = e_n_gnt_v ? e_item_in : (s_n_gnt_v ? s_item_in : (w_n_gnt_v ? w_item_in : (l_n_gnt_v ? l_item_in : 40'bZ)));
+	assign n_item_out = e_n_gnt_v ? e_item_in : (s_n_gnt_v ? s_item_in : (w_n_gnt_v ? w_item_in : (l_n_gnt_v ? l_item_in : 0)));
 	
-	assign e_item_out = n_e_gnt_v ? n_item_in : (s_e_gnt_v ? s_item_in : (w_e_gnt_v ? w_item_in : (l_e_gnt_v ? l_item_in : 40'bZ)));
+	assign e_item_out = n_e_gnt_v ? n_item_in : (s_e_gnt_v ? s_item_in : (w_e_gnt_v ? w_item_in : (l_e_gnt_v ? l_item_in : 0)));
 	
-	assign s_item_out = n_s_gnt_v ? n_item_in : (e_s_gnt_v ? e_item_in : (w_s_gnt_v ? w_item_in : (l_s_gnt_v ? l_item_in : 40'bZ)));
+	assign s_item_out = n_s_gnt_v ? n_item_in : (e_s_gnt_v ? e_item_in : (w_s_gnt_v ? w_item_in : (l_s_gnt_v ? l_item_in : 0)));
 	
-	assign w_item_out = n_w_gnt_v ? n_item_in : (e_w_gnt_v ? e_item_in : (s_w_gnt_v ? s_item_in : (l_w_gnt_v ? l_item_in : 40'bZ)));
+	assign w_item_out = n_w_gnt_v ? n_item_in : (e_w_gnt_v ? e_item_in : (s_w_gnt_v ? s_item_in : (l_w_gnt_v ? l_item_in : 0)));
 	
-	assign l_item_out = n_l_gnt_v ? n_item_in : (e_l_gnt_v ? e_item_in : (s_l_gnt_v ? s_item_in : (w_l_gnt_v ? w_item_in : 40'bZ))); 	
+	assign l_item_out = n_l_gnt_v ? n_item_in : (e_l_gnt_v ? e_item_in : (s_l_gnt_v ? s_item_in : (w_l_gnt_v ? w_item_in : 0))); 	
 	
 endmodule
 

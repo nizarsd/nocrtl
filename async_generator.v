@@ -1,6 +1,6 @@
 
 module generator(clk, reset, send);
-	parameter SIM_CYLES = 10000;
+	parameter SIM_CYLES = 100000;
 	parameter COOLDOWN_CYCLES = 10000;
 
 	output clk, reset, send;

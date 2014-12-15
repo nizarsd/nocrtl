@@ -1,0 +1,19 @@
+{
+   guistr: "# # String gsaved with Nlview version 6.4-r1  2014-02-28 bk=1.3047 VDI=34 GEI=35 GUI=JA:1.7
+#  -string -flagsOSRD
+preplace port CLK100 -pg 1 -y 70 -defaultsOSRD
+preplace port reset_rtl -pg 1 -y 80 -defaultsOSRD
+preplace port CLK05 -pg 1 -y 50 -defaultsOSRD
+preplace port sys_diff_clock -pg 1 -y 60 -defaultsOSRD
+preplace inst clk_wiz_0 -pg 1 -lvl 1 -y 70 -defaultsOSRD
+preplace netloc sys_diff_clock_1 1 0 1 N
+preplace netloc clk_wiz_0_clk_out1 1 1 1 N
+preplace netloc clk_wiz_0_clk_out3 1 1 1 N
+preplace netloc reset_rtl_1 1 0 1 N
+levelinfo -pg 1 130 260 390
+",
+   }
+{
+   da_board_cnt: "2",
+}
+0

@@ -75,16 +75,16 @@ module NI(id, clk, reset, item_out, req, channel_busy, send_en, item_in, valid, 
 	      
 	      // receive 
 	    if (valid & !busy & !done) begin
-		  
-		    if (counter[`PL_SZ-15] &&  id==0) begin
+// counter increment takes ~ 100 cycles 		  
+		    if ((counter > (50000)) &&  id==0) begin
 // 		    if (counter[`PL_SZ-22] &&  id==0) begin
 
 		    
 			  $display ("counter = %d, time = %d, id=%d", counter, $time, id);
 
 			  counter <= 0;
-			  
 			  led <= ! led;
+			  
 			  
 // 			  done <= 1;
 

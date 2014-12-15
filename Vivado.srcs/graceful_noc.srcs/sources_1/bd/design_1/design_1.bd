@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:tool_version="2014.2" bd:top="design_1" bd:version="1.00.a">
+
+  <spirit:component xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009">
+    <spirit:vendor>xilinx.com</spirit:vendor>
+    <spirit:library>BlockDiagram</spirit:library>
+    <spirit:name>design_1</spirit:name>
+    <spirit:version>1.00.a</spirit:version>
+    <spirit:parameters>
+      <spirit:parameter>
+        <spirit:name>isTop</spirit:name>
+        <spirit:value spirit:format="bool" spirit:resolve="immediate">true</spirit:value>
+      </spirit:parameter>
+    </spirit:parameters>
+    <spirit:busInterfaces>
+      <spirit:busInterface>
+        <spirit:name>SLOT_0_AXI</spirit:name>
+        <spirit:monitor/>
+        <spirit:busType spirit:library="interface" spirit:name="aximm" spirit:vendor="xilinx.com" spirit:version="1.0"/>
+        <spirit:abstractionType spirit:library="interface" spirit:name="aximm_rtl" spirit:vendor="xilinx.com" spirit:version="1.0"/>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>DATA_WIDTH</spirit:name>
+            <spirit:value>32</spirit:value>
+          </spirit:parameter>
+          <spirit:parameter>
+            <spirit:name>PROTOCOL</spirit:name>
+            <spirit:value>AXI4</spirit:value>
+          </spirit:parameter>
+          <spirit:parameter>
+            <spirit:name>ADDR_WIDTH</spirit:name>
+            <spirit:value>32</spirit:value>
+          </spirit:parameter>
+        </spirit:parameters>
+      </spirit:busInterface>
+      <spirit:busInterface>
+        <spirit:name>CLK.CLK</spirit:name>
+        <spirit:displayName>Clk</spirit:displayName>
+        <spirit:description>Clock</spirit:description>
+        <spirit:busType spirit:library="signal" spirit:name="clock" spirit:vendor="xilinx.com" spirit:version="1.0"/>
+        <spirit:abstractionType spirit:library="signal" spirit:name="clock_rtl" spirit:vendor="xilinx.com" spirit:version="1.0"/>
+        <spirit:slave/>
+        <spirit:portMaps>
+          <spirit:portMap>
+            <spirit:logicalPort>
+              <spirit:name>CLK</spirit:name>
+            </spirit:logicalPort>
+            <spirit:physicalPort>
+              <spirit:name>clk</spirit:name>
+            </spirit:physicalPort>
+          </spirit:portMap>
+        </spirit:portMaps>
+        <spirit:parameters/>
+      </spirit:busInterface>
+    </spirit:busInterfaces>
+    <spirit:model>
+      <spirit:views>
+        <spirit:view>
+          <spirit:name>BlockDiagram</spirit:name>
+          <spirit:envIdentifier>:vivado.xilinx.com:</spirit:envIdentifier>
+          <spirit:hierarchyRef spirit:library="BlockDiagram" spirit:name="design_1_imp" spirit:vendor="xilinx.com" spirit:version="1.00.a"/>
+        </spirit:view>
+      </spirit:views>
+      <spirit:ports>
+        <spirit:port>
+          <spirit:name>clk</spirit:name>
+          <spirit:wire>
+            <spirit:direction>in</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>probe10</spirit:name>
+          <spirit:wire>
+            <spirit:direction>in</spirit:direction>
+            <spirit:vector>
+              <spirit:left>31</spirit:left>
+              <spirit:right>0</spirit:right>
+            </spirit:vector>
+          </spirit:wire>
+        </spirit:port>
+      </spirit:ports>
+    </spirit:model>
+  </spirit:component>
+
+  <spirit:design xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009">
+    <spirit:vendor>xilinx.com</spirit:vendor>
+    <spirit:library>BlockDiagram</spirit:library>
+    <spirit:name>design_1_imp</spirit:name>
+    <spirit:version>1.00.a</spirit:version>
+    <spirit:componentInstances>
+      <spirit:componentInstance>
+        <spirit:instanceName>ila_0</spirit:instanceName>
+        <spirit:componentRef spirit:library="ip" spirit:name="ila" spirit:vendor="xilinx.com" spirit:version="4.0"/>
+        <spirit:configurableElementValues>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_ila_0_0</spirit:configurableElementValue>
+        </spirit:configurableElementValues>
+      </spirit:componentInstance>
+    </spirit:componentInstances>
+    <spirit:interconnections>
+      <spirit:monitorInterconnection>
+        <spirit:name>Conn</spirit:name>
+        <spirit:monitorInterface spirit:busRef="SLOT_0_AXI" spirit:componentRef="ila_0"/>
+        <spirit:monitorInterface spirit:busRef="SLOT_0_AXI"/>
+      </spirit:monitorInterconnection>
+    </spirit:interconnections>
+    <spirit:adHocConnections>
+      <spirit:adHocConnection>
+        <spirit:name>clk_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="clk"/>
+        <spirit:internalPortReference spirit:componentRef="ila_0" spirit:portRef="clk"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>probe10_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="probe10"/>
+        <spirit:internalPortReference spirit:componentRef="ila_0" spirit:portRef="probe10"/>
+      </spirit:adHocConnection>
+    </spirit:adHocConnections>
+    <spirit:hierConnections/>
+  </spirit:design>
+
+</bd:repository>

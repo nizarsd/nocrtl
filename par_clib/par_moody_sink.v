@@ -48,7 +48,7 @@ module moody_sink (clk, reset, data, req, busy);
 				register <= data[`PL_SZ + `ADDR_SZ-1:`ADDR_SZ] ;
 				dest_addr <= data[`ADDR_SZ-1:0];
 				if (id != -1) $display ("##,rx,%d,%d",id, data[`PL_SZ + `ADDR_SZ-1:`ADDR_SZ]);
-// 				if (id != data[`ADDR_SZ-1:0]) $display ("*****rx violation in %d, %d -> %d @ %d",id,  data[`HDR_SZ + `PL_SZ + `ADDR_SZ-1:`PL_SZ + `ADDR_SZ],data[`ADDR_SZ-1:0],$time );
+				if (id != data[`ADDR_SZ-1:0]) $display ("*****rx violation in %d, %d -> %d @ %d",id,  data[`HDR_SZ + `PL_SZ + `ADDR_SZ-1:`PL_SZ + `ADDR_SZ],data[`ADDR_SZ-1:0],$time );
 // 				busy <= 1;
 			end else 
 			busy <= 0;//(rand > hospitality);
