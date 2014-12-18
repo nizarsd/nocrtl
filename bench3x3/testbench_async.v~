@@ -15,7 +15,7 @@
 `include "../par_clib/ch_rx_logic.v"
 
 
-`include "../async_clib/dclk_rx4.v"
+`include "../async_clib/dclk_rx5.v"
 `include "../async_clib/dclk_tx.v"
 `include "../async_clib/async_router.v"
 `include "../async_clib/async_generator.v"

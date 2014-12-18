@@ -1,6 +1,6 @@
 
 module dclk_rx (rclk, wclk, reset, valid, channel_busy, item_read, serial_in, parallel_out);
- 	`include "constants.v"
+ //	`include "constants.v"
 // 	parameter routerid=-1;
 	parameter port="unknown";
 	
@@ -50,7 +50,6 @@ module dclk_rx (rclk, wclk, reset, valid, channel_busy, item_read, serial_in, pa
 	assign valid =  valid_reg[1];  // synchronised to rclk (wr -> rd)
 	assign read =  read_reg[1];    // synchronised to wclk (rd -> wr)
 	
-		
 	assign gstate = (rd_wr_flag == `FLAG_WR) ? wr_state : rd_state;
 	assign channel_busy = (gstate != `WR_STATE_IDLE);
 	
@@ -93,13 +92,11 @@ module dclk_rx (rclk, wclk, reset, valid, channel_busy, item_read, serial_in, pa
 		end
 	end
 
-	
-	always @(negedge wclk) begin
+	always @(posedge wclk) begin
 		
 		read_reg[0] <= readd;  // synchronise "read" to rclk
 		
 		read_reg[1] <= read_reg[0];
-
 	
 		if (reset) begin
 
@@ -156,7 +153,6 @@ module dclk_rx (rclk, wclk, reset, valid, channel_busy, item_read, serial_in, pa
 				    
 		      endcase  // case   
 
-
 		
 		end  // ! reset
 	
@@ -164,5 +160,4 @@ module dclk_rx (rclk, wclk, reset, valid, channel_busy, item_read, serial_in, pa
 
 
 endmodule
-
 	 

@@ -3,7 +3,7 @@
 
 module async_gen(clk, reset, send);
 	parameter SIM_CYLES =10000;
-	parameter COOLDOWN_CYCLES = 5000;
+	parameter COOLDOWN_CYCLES = 6000;
 
 	output [`NUM_NODES-1 : 0] clk;
 	output reset, send;
@@ -11,8 +11,8 @@ module async_gen(clk, reset, send);
 	reg [`NUM_NODES-1 : 0] clk;
 	reg reset, send;
 	
-	parameter CLK_PHASE_0 = 0;
-	parameter CLK_PHASE_1 = 1;
+	parameter CLK_PHASE_0 = 1;
+	parameter CLK_PHASE_1 = 0;
 	parameter CLK_PHASE_2 = 0;
 	parameter CLK_PHASE_3 = 0;
 	parameter CLK_PHASE_4 = 0;
@@ -23,7 +23,7 @@ module async_gen(clk, reset, send);
 		
 	
 	parameter CLK_PERIOD_0 = 4;
-	parameter CLK_PERIOD_1 = 4;
+	parameter CLK_PERIOD_1 = 6;
 	parameter CLK_PERIOD_2 = 4;
 	parameter CLK_PERIOD_3 = 4;
 	parameter CLK_PERIOD_4 = 4;
