@@ -47,7 +47,7 @@
 	wire p_ok;
 	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ - 2:0] packet;
 	assign packet = item_in[`HDR_SZ + `PL_SZ + `ADDR_SZ - 2 : 0];
-	assign p_ok = (item_in[`HDR_SZ + `PL_SZ + `ADDR_SZ-1] == (^packet));
+	assign p_ok = 1; //(item_in[`HDR_SZ + `PL_SZ + `ADDR_SZ-1] == (^packet));
 	
 // 	assign full= (count==`FIFO_DEPTH);
 // 	assign empty= (count==0);

@@ -10,17 +10,7 @@
             DIP_SW0,	// en,
             LEDS, 	// led,  error,
                                     
-	// North 
-	    // rx
-            FMC1_LPC_LA00_CC_P,
-            FMC1_LPC_LA00_CC_N,
-            FMC1_LPC_LA01_CC_P,
-            
-            // tx
-            FMC1_LPC_LA01_CC_N,
-            FMC1_LPC_LA02_P,
-            FMC1_LPC_LA02_N,
-            
+
 	// East   
 	    // rx
             FMC1_LPC_LA03_P,
@@ -31,17 +21,6 @@
             FMC1_LPC_LA04_N,
             FMC1_LPC_LA05_P,
             FMC1_LPC_LA05_N,
-            
-       // South 
-	    // rx
-            FMC1_LPC_LA06_P,
-            FMC1_LPC_LA06_N,
-            FMC1_LPC_LA07_P,
-            
-            // tx
-            FMC1_LPC_LA07_N,
-            FMC1_LPC_LA08_P,
-            FMC1_LPC_LA08_N,
             
       // West 
 	    // rx
@@ -54,14 +33,12 @@
             FMC1_LPC_LA22_P,
             FMC1_LPC_LA22_N,
             
-            // rx_clock forwarded (debug)
-            FMC1_LPC_LA24_P, 
-            FMC1_LPC_LA24_N, 
-            FMC1_LPC_LA25_P, 
-            FMC1_LPC_LA25_N,
-            
             sys_diff_clock_clk_n,
-            sys_diff_clock_clk_p
+            sys_diff_clock_clk_p,
+            
+            // (debug)
+            FMC1_LPC_LA24_P 
+            
     ); 
 
  	`include "constants.v"
@@ -79,18 +56,6 @@
 	input sys_diff_clock_clk_n;
 	input sys_diff_clock_clk_p;
 
-// 	wire reset, clk;
-
-//	output rx_busy_w, rx_busy_s,rx_busy_e, rx_busy_n;
-//	input  rx_data_w, rx_data_s,rx_data_e, rx_data_n;
-//	input  tx_busy_w, tx_busy_s,tx_busy_e, tx_busy_n;
-//	output tx_data_w, tx_data_s,tx_data_e, tx_data_n;
-	
-//	input clk, rx_clk_n, rx_clk_e, rx_clk_s, rx_clk_w, reset, en;
-//	output tx_clk_n, tx_clk_e, tx_clk_s, tx_clk_w, led, error;
-	
-//	input [`ADDR_SZ-1:0] id;
-
 	input DIP_SW0; // en
 	input DIP_SW1; // id
 	
@@ -101,17 +66,6 @@
 
 	
 	output [7:0] LEDS; // led,  error
-
-    // North 
-	// rx
-	input  FMC1_LPC_LA00_CC_P;
-	input  FMC1_LPC_LA00_CC_N;
-	output FMC1_LPC_LA01_CC_P;
-
-	// tx
-	input  FMC1_LPC_LA01_CC_N;
-	output FMC1_LPC_LA02_P;
-	output FMC1_LPC_LA02_N;
 
     // East   
 	// rx
@@ -124,16 +78,6 @@
 	output  FMC1_LPC_LA05_P;
 	output  FMC1_LPC_LA05_N;
 
-    // South 
-	// rx
-	input   FMC1_LPC_LA06_P;
-	input   FMC1_LPC_LA06_N;
-	output  FMC1_LPC_LA07_P;
-
-	// tx
-	input   FMC1_LPC_LA07_N;
-	output  FMC1_LPC_LA08_P;
-	output  FMC1_LPC_LA08_N;
 
     // West 
 	// rx
@@ -146,51 +90,63 @@
 	output  FMC1_LPC_LA22_P;
 	output  FMC1_LPC_LA22_N;
           
-        output FMC1_LPC_LA24_P, FMC1_LPC_LA24_N, FMC1_LPC_LA25_P, FMC1_LPC_LA25_N;
-		    
+	wire tx_busy_l, tx_busy_w, tx_busy_s, tx_busy_e, tx_busy_n;
+	
+	wire tx_data_w, tx_data_s,tx_data_e, tx_data_n;
+		
+	wire rx_data_s, rx_data_e, rx_data_n;
+	
+	(* mark_debug = "true" *)  wire rx_data_w; 
+	(* mark_debug = "true" *)  wire rx_clk_w; 
+	(* mark_debug = "true" *)  wire rx_busy_w; 
+	wire rx_busy_l, rx_busy_s, rx_busy_e, rx_busy_n;
+	
+	wire rx_clk_n, rx_clk_e, rx_clk_s;
+	
+	
     // North 
 	// rx
-	assign  rx_clk_n  = FMC1_LPC_LA00_CC_P;
-	assign  rx_data_n = FMC1_LPC_LA00_CC_N;
-	assign  FMC1_LPC_LA01_CC_P = rx_busy_n;
+	assign  rx_clk_n  = 0; //FMC1_LPC_LA00_CC_P;
+	assign  rx_data_n = 0; //FMC1_LPC_LA00_CC_N;
+// 	assign  FMC1_LPC_LA01_CC_P = rx_busy_n;
 
 	// tx
-	assign tx_busy_n = FMC1_LPC_LA01_CC_N;
-	assign FMC1_LPC_LA02_P = tx_data_n;
-	assign FMC1_LPC_LA02_N = tx_clk_n;
+	assign tx_busy_n = 0; //FMC1_LPC_LA01_CC_N;
+// 	assign FMC1_LPC_LA02_P = tx_data_n;
+// 	assign FMC1_LPC_LA02_N = tx_clk_n;
 
     // East   
 	// rx
-	assign  rx_clk_e  = FMC1_LPC_LA03_P;
-	assign  rx_data_e =  FMC1_LPC_LA03_N;
-	assign  FMC1_LPC_LA04_P = rx_busy_e;
+	(* dont_touch = "true" *)   assign  rx_clk_e  = (id == 1) ? 0:FMC1_LPC_LA03_P;
+	(* dont_touch = "true" *)   assign  rx_data_e = (id == 1) ? 0:FMC1_LPC_LA03_N;
+	(* dont_touch = "true" *)   assign  FMC1_LPC_LA04_P = rx_busy_e;
 
 	// tx
-	assign  tx_busy_e = FMC1_LPC_LA04_N;
-	assign  FMC1_LPC_LA05_P = tx_data_e;
-	assign  FMC1_LPC_LA05_N = tx_clk_e;
+	(* dont_touch = "true" *)  assign  tx_busy_e = (id == 1) ? 0:FMC1_LPC_LA04_N;
+	(* dont_touch = "true" *)  assign  FMC1_LPC_LA05_P = tx_data_e;  
+	(* dont_touch = "true" *)  assign  FMC1_LPC_LA05_N = tx_clk_e;
 
     // South 
 	// rx
-	assign  rx_clk_s  =  FMC1_LPC_LA06_P;
-	assign  rx_data_s = FMC1_LPC_LA06_N;
-	assign  FMC1_LPC_LA07_P = rx_busy_s;
+	assign  rx_clk_s  =  0; //FMC1_LPC_LA06_P;
+	assign  rx_data_s = 0; //FMC1_LPC_LA06_N;
+// 	assign  FMC1_LPC_LA07_P = rx_busy_s;
 
 	// tx
-	assign  tx_busy_s = FMC1_LPC_LA07_N;
-	assign  FMC1_LPC_LA08_P = tx_data_s;
-	assign  FMC1_LPC_LA08_N = tx_clk_s;
+	assign  tx_busy_s = 0; //FMC1_LPC_LA07_N;
+// 	assign  FMC1_LPC_LA08_P = tx_data_s;
+// 	assign  FMC1_LPC_LA08_N = tx_clk_s;
 
     // West 
 	// rx
-	assign  rx_clk_w  = FMC1_LPC_LA20_P;
-	assign  rx_data_w = FMC1_LPC_LA20_N;
-	assign  FMC1_LPC_LA21_P = rx_busy_w;
+	(* dont_touch = "true" *)   assign  rx_clk_w  = (id == 0) ? 0:FMC1_LPC_LA20_P;
+	(* dont_touch = "true" *)   assign  rx_data_w = (id == 0) ? 0:FMC1_LPC_LA20_N;
+	(* dont_touch = "true" *)   assign  FMC1_LPC_LA21_P =  rx_busy_w;
 
 	//tx
-	assign  tx_busy_w = FMC1_LPC_LA21_N;
-	assign  FMC1_LPC_LA22_P = tx_data_w;
-	assign  FMC1_LPC_LA22_N = tx_clk_w;
+	(* dont_touch = "true" *)  assign  tx_busy_w = (id == 0) ? 0:FMC1_LPC_LA21_N;
+	(* dont_touch = "true" *)  assign  FMC1_LPC_LA22_P = tx_data_w;
+	(* dont_touch = "true" *)  assign  FMC1_LPC_LA22_N = tx_clk_w;
 
                         
 	wire [`ADDR_SZ-1:0] id;
@@ -211,7 +167,7 @@
 	 
 	assign en = DIP_SW0;
 	
-	assign LEDS[0] = error;
+ 	assign LEDS[0] = error;
 
 	assign LEDS[1] = led; 
         
@@ -234,13 +190,10 @@
 	wire  rx_valid_l;
 	wire  tx_valid_l;
 	
-	wire  rx_busy_l;
-	wire  tx_busy_l;	
-	
 	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ - 1 : 0]  rx_data_l;
 	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ - 1 : 0]  tx_data_l;
 	
-	wire [19:0] flit_counter;
+	/*(* mark_debug = "true" *) */ wire [19:0] flit_counter;
 		
 // 	clocks 
 	
@@ -255,19 +208,19 @@
 	
 	// data a busy signals 
 	
-	assign tx_busy = {tx_busy_l,tx_busy_w, tx_busy_s, tx_busy_e, tx_busy_n};
 	
-	assign {tx_data_w, tx_data_s,tx_data_e, tx_data_n} = tx_data;
+	assign tx_busy = {tx_busy_l, tx_busy_w, tx_busy_s, tx_busy_e, tx_busy_n};
+	
+	assign {tx_data_w, tx_data_s, tx_data_e, tx_data_n} = tx_data;
 		
-	assign rx_data= {rx_data_w, rx_data_s,rx_data_e, rx_data_n};
+	assign rx_data= {rx_data_w, rx_data_s, rx_data_e, rx_data_n};
 	
-	assign {rx_busy_l,rx_busy_w, rx_busy_s,rx_busy_e, rx_busy_n} = rx_busy;
+	assign {rx_busy_l, rx_busy_w, rx_busy_s,rx_busy_e, rx_busy_n} = rx_busy;
 	
-	assign rx_clk = {rx_clk_n, rx_clk_e, rx_clk_s, rx_clk_w};
+	assign rx_clk = {rx_clk_w, rx_clk_s, rx_clk_e, rx_clk_n};
 	
-	(* dont_touch = "true" *)  assign {FMC1_LPC_LA24_P, FMC1_LPC_LA24_N, FMC1_LPC_LA25_P, FMC1_LPC_LA25_N} =  {rx_clk_n, rx_clk_e, rx_clk_s, rx_clk_w};
 	
-	wire tx_clk;
+	wire tx_clk; 
 	
 	assign tx_clk_n = tx_clk;
 	assign tx_clk_e = tx_clk;
@@ -283,14 +236,17 @@
 	assign sink_valid = tx_valid_l;
 	assign tx_busy_l  = sink_busy;
 	
+	output FMC1_LPC_LA24_P;
 	
+
+						 
 	
 	// clock source
-	wire CLK05;
+	wire CLK05, CLK100;
 
-	    clk_src clk_src_i
+(* dont_touch = "true" *)    clk_src clk_src_i
 		      (
-		      
+		      .CLK100(CLK100),		      
 		      .CLK05(CLK05),
 		      .reset_rtl(reset),
 		      .sys_diff_clock_clk_n(sys_diff_clock_clk_n),
@@ -303,7 +259,7 @@
 	
 	// router
 	
-	async_router  router0 (
+(* dont_touch = "true" *)	async_router  router0 (
 	
 		      .id(id),
 		      .clk(clk),
@@ -324,7 +280,7 @@
 
 	// Network in interface  
 	  
-	  NI	NI0 (
+(* dont_touch = "true" *)	  NI	NI0 (
 	  
 		      .id(id),
 		      .clk(clk), 
@@ -341,27 +297,10 @@
 		      
 		      );
 		      
-		      
-		      
-// 	  reg [31:0] counterx;
-	  reg  toggling;
-	  
-
-	  
-	  assign LEDS[7]=toggling;
-	  
-	   always @(posedge clk) begin
-	
-		if (reset)  begin
-			toggling <=0;
-		end
-			
-		else 
-	  	    if (source_data[`PL_SZ + `ADDR_SZ - 1:`ADDR_SZ] > 100000-1 & source_valid)  
-			  toggling <= !toggling;
-
-	    end
-	
-
 	
 endmodule
+
+
+
+
+

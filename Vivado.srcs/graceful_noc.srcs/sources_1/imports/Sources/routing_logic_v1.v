@@ -140,15 +140,15 @@
 
 	// routing tables
 	
-    routing_table  rtable_n (id, reset, n_table_addr, n_table_data);
-    
-    routing_table  rtable_e (id, reset, e_table_addr, e_table_data);
-    
-    routing_table  rtable_s (id, reset, s_table_addr, s_table_data);
-    
-    routing_table  rtable_w (id, reset, w_table_addr, w_table_data);    
+	routing_table  rtable_n (id, reset, n_table_addr, n_table_data);
 	
-    routing_table  rtable_l (id, reset, l_table_addr, l_table_data);    
+	routing_table  rtable_e (id, reset, e_table_addr, e_table_data);
+	
+	routing_table  rtable_s (id, reset, s_table_addr, s_table_data);
+	
+	routing_table  rtable_w (id, reset, w_table_addr, w_table_data);    
+	    
+	routing_table  rtable_l (id, reset, l_table_addr, l_table_data);    
 	
 	// arbitration
 	

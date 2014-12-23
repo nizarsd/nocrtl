@@ -329,3 +329,71 @@ connect_debug_port u_ila_1/probe2 [get_nets [list validx]]
 
 #connect_debug_port u_ila_1/probe0 [get_nets [list   {router0/fifos[3].myfifo/item_in[0]} {router0/fifos[3].myfifo/item_in[1]} {router0/fifos[3].myfifo/item_in[2]} {router0/fifos[3].myfifo/item_in[3]} {router0/fifos[3].myfifo/item_in[4]} {router0/fifos[3].myfifo/item_in[5]} {router0/fifos[3].myfifo/item_in[6]} {router0/fifos[3].myfifo/item_in[7]} {router0/fifos[3].myfifo/item_in[8]} {router0/fifos[3].myfifo/item_in[9]} {router0/fifos[3].myfifo/item_in[10]} {router0/fifos[3].myfifo/item_in[11]} {router0/fifos[3].myfifo/item_in[12]} {router0/fifos[3].myfifo/item_in[13]} {router0/fifos[3].myfifo/item_in[14]} {router0/fifos[3].myfifo/item_in[15]} {router0/fifos[3].myfifo/item_in[16]} {router0/fifos[3].myfifo/item_in[17]} {router0/fifos[3].myfifo/item_in[18]} {router0/fifos[3].myfifo/item_in[19]} {router0/fifos[3].myfifo/item_in[20]} {router0/fifos[3].myfifo/item_in[21]} {router0/fifos[3].myfifo/item_in[22]} {router0/fifos[3].myfifo/item_in[23]} {router0/fifos[3].myfifo/item_in[24]} {router0/fifos[3].myfifo/item_in[25]} {router0/fifos[3].myfifo/item_in[26]} {router0/fifos[3].myfifo/item_in[27]} {router0/fifos[3].myfifo/item_in[28]} {router0/fifos[3].myfifo/item_in[29]} {router0/fifos[3].myfifo/item_in[30]} {router0/fifos[3].myfifo/item_in[31]} {router0/fifos[3].myfifo/item_in[32]} {router0/fifos[3].myfifo/item_in[33]} {router0/fifos[3].myfifo/item_in[34]} {router0/fifos[3].myfifo/item_in[35]} {router0/fifos[3].myfifo/item_in[36]} {router0/fifos[3].myfifo/item_in[37]} {router0/fifos[3].myfifo/item_in[38]} {router0/fifos[3].myfifo/item_in[39]}]]
 
+
+
+#create_debug_core u_ila_0_0 ila
+#set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0_0]
+#set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_0_0]
+#set_property C_ADV_TRIGGER false [get_debug_cores u_ila_0_0]
+#set_property C_DATA_DEPTH 32768 [get_debug_cores u_ila_0_0]
+#set_property C_EN_STRG_QUAL false [get_debug_cores u_ila_0_0]
+#set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_0_0]
+#set_property C_TRIGIN_EN false [get_debug_cores u_ila_0_0]
+#set_property C_TRIGOUT_EN false [get_debug_cores u_ila_0_0]
+#set_property port_width 1 [get_debug_ports u_ila_0_0/clk]
+#connect_debug_port u_ila_0_0/clk [get_nets [list clk_src_i/CLK100]]
+#set_property port_width 12 [get_debug_ports u_ila_0_0/probe0]
+#connect_debug_port u_ila_0_0/probe0 [get_nets [list   {router0/fifos[3].myfifo/item_in[0]} {router0/fifos[3].myfifo/item_in[1]} {router0/fifos[3].myfifo/item_in[2]} {router0/fifos[3].myfifo/item_in[3]} {router0/fifos[3].myfifo/item_in[32]} {router0/fifos[3].myfifo/item_in[33]} {router0/fifos[3].myfifo/item_in[34]} {router0/fifos[3].myfifo/item_in[35]} {router0/fifos[3].myfifo/item_in[36]} {router0/fifos[3].myfifo/item_in[37]} {router0/fifos[3].myfifo/item_in[38]} {router0/fifos[3].myfifo/item_in[39]}]]
+
+#create_debug_port u_ila_0_0 probe
+#set_property port_width 1 [get_debug_ports u_ila_0_0/probe1]
+#connect_debug_port u_ila_0_0/probe1 [get_nets [list router0/fifos[3].myfifo/full]]
+
+
+#create_debug_port u_ila_0_0 probe
+#set_property port_width 12 [get_debug_ports u_ila_0_0/probe2]
+#connect_debug_port u_ila_0_0/probe2 [get_nets [list   {router0/fifos[3].myfifo/fifo_item0_dbg[0]} {router0/fifos[3].myfifo/fifo_item0_dbg[1]} {router0/fifos[3].myfifo/fifo_item0_dbg[2]} {router0/fifos[3].myfifo/fifo_item0_dbg[3]} {router0/fifos[3].myfifo/fifo_item0_dbg[32]} {router0/fifos[3].myfifo/fifo_item0_dbg[33]} {router0/fifos[3].myfifo/fifo_item0_dbg[34]} {router0/fifos[3].myfifo/fifo_item0_dbg[35]} {router0/fifos[3].myfifo/fifo_item0_dbg[36]} {router0/fifos[3].myfifo/fifo_item0_dbg[37]} {router0/fifos[3].myfifo/fifo_item0_dbg[38]} {router0/fifos[3].myfifo/fifo_item0_dbg[39]}]]
+
+#create_debug_port u_ila_0_0 probe
+#set_property port_width 12 [get_debug_ports u_ila_0_0/probe3]
+#connect_debug_port u_ila_0_0/probe3 [get_nets [list   {router0/fifos[3].myfifo/fifo_item1_dbg[0]} {router0/fifos[3].myfifo/fifo_item1_dbg[1]} {router0/fifos[3].myfifo/fifo_item1_dbg[2]} {router0/fifos[3].myfifo/fifo_item1_dbg[3]} {router0/fifos[3].myfifo/fifo_item1_dbg[32]} {router0/fifos[3].myfifo/fifo_item1_dbg[33]} {router0/fifos[3].myfifo/fifo_item1_dbg[34]} {router0/fifos[3].myfifo/fifo_item1_dbg[35]} {router0/fifos[3].myfifo/fifo_item1_dbg[36]} {router0/fifos[3].myfifo/fifo_item1_dbg[37]} {router0/fifos[3].myfifo/fifo_item1_dbg[38]} {router0/fifos[3].myfifo/fifo_item1_dbg[39]}]]
+
+#create_debug_port u_ila_0_0 probe
+#set_property port_width 12 [get_debug_ports u_ila_0_0/probe4]
+#connect_debug_port u_ila_0_0/probe4 [get_nets [list   {router0/fifos[3].myfifo/fifo_itemrd_dbg[0]} {router0/fifos[3].myfifo/fifo_itemrd_dbg[1]} {router0/fifos[3].myfifo/fifo_itemrd_dbg[2]} {router0/fifos[3].myfifo/fifo_itemrd_dbg[3]} {router0/fifos[3].myfifo/fifo_itemrd_dbg[32]} {router0/fifos[3].myfifo/fifo_itemrd_dbg[33]} {router0/fifos[3].myfifo/fifo_itemrd_dbg[34]} {router0/fifos[3].myfifo/fifo_itemrd_dbg[35]} {router0/fifos[3].myfifo/fifo_itemrd_dbg[36]} {router0/fifos[3].myfifo/fifo_itemrd_dbg[37]} {router0/fifos[3].myfifo/fifo_itemrd_dbg[38]} {router0/fifos[3].myfifo/fifo_itemrd_dbg[39]}]]
+
+#create_debug_port u_ila_0_0 probe
+#set_property port_width 12 [get_debug_ports u_ila_0_0/probe5]
+#connect_debug_port u_ila_0_0/probe5 [get_nets [list   {router0/fifos[3].myfifo/fifo_itemrd1_dbg[0]} {router0/fifos[3].myfifo/fifo_itemrd1_dbg[1]} {router0/fifos[3].myfifo/fifo_itemrd1_dbg[2]} {router0/fifos[3].myfifo/fifo_itemrd1_dbg[3]} {router0/fifos[3].myfifo/fifo_itemrd1_dbg[32]} {router0/fifos[3].myfifo/fifo_itemrd1_dbg[33]} {router0/fifos[3].myfifo/fifo_itemrd1_dbg[34]} {router0/fifos[3].myfifo/fifo_itemrd1_dbg[35]} {router0/fifos[3].myfifo/fifo_itemrd1_dbg[36]} {router0/fifos[3].myfifo/fifo_itemrd1_dbg[37]} {router0/fifos[3].myfifo/fifo_itemrd1_dbg[38]} {router0/fifos[3].myfifo/fifo_itemrd1_dbg[39]}]]
+
+#create_debug_port u_ila_0_0 probe
+#set_property port_width 1 [get_debug_ports u_ila_0_0/probe6]
+#connect_debug_port u_ila_0_0/probe6 [get_nets [list router0/fifos[3].myfifo/empty]]
+
+
+#create_debug_core u_ila_1 ila
+#set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_1]
+#set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_1]
+#set_property C_ADV_TRIGGER false [get_debug_cores u_ila_1]
+#set_property C_DATA_DEPTH 32768 [get_debug_cores u_ila_1]
+#set_property C_EN_STRG_QUAL false [get_debug_cores u_ila_1]
+#set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_1]
+#set_property C_TRIGIN_EN false [get_debug_cores u_ila_1]
+#set_property C_TRIGOUT_EN false [get_debug_cores u_ila_1]
+#set_property port_width 1 [get_debug_ports u_ila_1/clk]
+#connect_debug_port u_ila_1/clk [get_nets [list clk_src_i/CLK100]]
+#set_property port_width 12 [get_debug_ports u_ila_1/probe0]
+#connect_debug_port u_ila_1/probe0 [get_nets [list   {router0/fifos[3].myfifo/item_in[0]} {router0/fifos[3].myfifo/item_in[1]} {router0/fifos[3].myfifo/item_in[2]} {router0/fifos[3].myfifo/item_in[3]} {router0/fifos[3].myfifo/item_in[32]} {router0/fifos[3].myfifo/item_in[33]} {router0/fifos[3].myfifo/item_in[34]} {router0/fifos[3].myfifo/item_in[35]} {router0/fifos[3].myfifo/item_in[36]} {router0/fifos[3].myfifo/item_in[37]} {router0/fifos[3].myfifo/item_in[38]} {router0/fifos[3].myfifo/item_in[39]}]]
+
+#create_debug_port u_ila_1 probe
+#set_property port_width 12 [get_debug_ports u_ila_1/probe0]
+#connect_debug_port u_ila_1/probe0 [get_nets [list   {router0/fifos[3].myfifo/item_in[0]} {router0/fifos[3].myfifo/item_in[1]} {router0/fifos[3].myfifo/item_in[2]} {router0/fifos[3].myfifo/item_in[3]} {router0/fifos[3].myfifo/item_in[32]} {router0/fifos[3].myfifo/item_in[33]} {router0/fifos[3].myfifo/item_in[34]} {router0/fifos[3].myfifo/item_in[35]} {router0/fifos[3].myfifo/item_in[36]} {router0/fifos[3].myfifo/item_in[37]} {router0/fifos[3].myfifo/item_in[38]} {router0/fifos[3].myfifo/item_in[39]}]]
+
+
+#create_debug_port u_ila_1 probe
+#set_property port_width 1 [get_debug_ports u_ila_1/probe1]
+#connect_debug_port u_ila_1/probe1 [get_nets [list router0/fifos[3].myfifo/empty]]
+
+#create_debug_port u_ila_1 probe
+#set_property port_width 1 [get_debug_ports u_ila_1/probe1]
+#connect_debug_port u_ila_1/probe1 [get_nets [list router0/fifos[3].myfifo/full]]

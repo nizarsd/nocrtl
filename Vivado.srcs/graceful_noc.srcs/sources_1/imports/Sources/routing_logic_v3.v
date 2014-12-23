@@ -2,7 +2,6 @@
 // routing logic - parallel routing and arbitration for each channel
 // Nizar Dahir 2014
 //----------------------------------------------------
-
 module routing_logic(	id, clk, reset,
 			n_item_in, n_read, n_empty, n_item_out, n_ena, n_busy,
 			e_item_in, e_read, e_empty, e_item_out, e_ena, e_busy,
@@ -10,6 +9,18 @@ module routing_logic(	id, clk, reset,
 			w_item_in, w_read, w_empty, w_item_out, w_ena, w_busy,
 			l_item_in, l_read, l_empty, l_item_out, l_ena, l_busy
 			);
+	`include "constants.v"
+// 	`include "fifo.v"
+// 	`include "routing_logic_v2.v"
+// 	`include "par_rx_logic.v"
+//	`include "routing_table.v"	
+//	`include "rr_arbiter.v"
+// 	`include "ch_rx_logic.v"
+// 	`include "NI_v1.v"
+// 	`include "dclk_rx.v"
+// 	`include "dclk_tx.v"
+// 	`include "async_router.v"
+
 // 	parameter id=-1;
 	
 // 	parameter table_file ="";
@@ -70,8 +81,8 @@ module routing_logic(	id, clk, reset,
 	wire [0:`DIRECTIONS-1] gnt[0:`DIRECTIONS-1];
 	
 	wire [0:`DIRECTIONS-1] gnt_v[0:`DIRECTIONS-1];
-	
-	
+
+
 	genvar i,j;
 
 	generate
@@ -83,9 +94,8 @@ module routing_logic(	id, clk, reset,
 	  // routing tables
 
 	  for(i=0; i<`DIRECTIONS; i=i+1) begin: rtables
-	  
 	      routing_table  rtable (id, table_addr[i], table_data[i]);
-	      
+	  
 	  end
 	  
 	  // tx channel enables  and rx channel reads

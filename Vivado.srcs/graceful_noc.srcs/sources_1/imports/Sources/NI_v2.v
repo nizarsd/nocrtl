@@ -71,49 +71,57 @@
       //     counter increment takes ~ 100 cycles 		  
 	   
 	      
-	   if (id == 1 & valid)  begin
-		
-//          	  counter <= data_in;
-         	  counter <= counter + 1;
-		  
-		  //$display ("data_in = %d\n", data_in);
-		  if (counter > tg_count) begin
-			counter <= 0;
-			led = !led;
-		  end
-	   end
-		    
-	   else if (id==0) 	   
-	      if (!channel_busy & send_en & !busy) begin
-			  
-			  if (counter > tg_count)   begin
-			  
-			 	led = !led;
-			 	
-			 	counter <= 0;
-			 	
-			 	busy <= 0;
-			  end
-			  else  begin
-			  
-				counter <= counter + 1;
-		    
-				item_out[`HDR_SZ + `PL_SZ + `ADDR_SZ - 2 : 0] <= packet;
-				
-				item_out[`HDR_SZ + `PL_SZ + `ADDR_SZ-1] <= ^packet;  // parity bit
+	   if (id == 1)  
+	    begin
+		if (valid)
+		  begin
+		      counter <= data_in;
 
-				req <= 1;
-				
-				busy <= 1;
-			  end
-			  
-	      end 
-	      
-	      else 
-	      begin 
-		  req <= 0;
-		  busy <= 0;
-	      end
+		      if (counter > tg_count-1) led = !led;
+		      error <= (((data_in-counter) == 1) | (data_in == 0)) ;
+		      
+		  end
+		  
+		  
+	    end
+		    
+	   if (id==0) 
+	    begin
+	    
+		if (!channel_busy & send_en & !busy) 
+		  begin
+			      
+			  if (counter > tg_count)   
+			    begin
+			    
+				  led = !led;
+				  
+				  counter <= 0;
+				  
+				  busy <= 0;
+			    end
+			  else  
+			    begin
+			    
+				  counter <= counter + 1;
+		      
+				  item_out[`HDR_SZ + `PL_SZ + `ADDR_SZ - 2 : 0] <= packet;
+				  
+				  item_out[`HDR_SZ + `PL_SZ + `ADDR_SZ-1] <= ^packet;  // parity bit
+
+				  req <= 1;
+				  
+				  busy <= 1;
+			    end
+			      
+		  end 
+		
+		else 
+		  begin 
+		      req <= 0;
+		      busy <= 0;
+		  end
+	    end
 	      
 	end // !reset
 	

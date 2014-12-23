@@ -337,6 +337,8 @@
 	
 	reg count_err;
 	
+	reg rd_readx;
+	
 		 
 	 dclk_rx rx_w0 (
 		    CLK05, 
@@ -344,7 +346,7 @@
 		    reset, 
 		    validx, 
 		    channel_busyx, 
-		    1'b1, 
+		    rd_readx, 
 		    rx_data_w, 
 		    parallel_outx);
 		    
@@ -356,11 +358,15 @@
 		end
 			
 		else begin
-		    if (validx)	    
-		    begin
-			  count_err <= (((parallel_outx[`PL_SZ + `ADDR_SZ-1:`ADDR_SZ] - itemx [`PL_SZ + `ADDR_SZ-1:`ADDR_SZ]) == 1) & (parallel_outx != 0));
-			  itemx <= parallel_outx;
-	            end 
+		    if (validx)
+		      begin
+			rd_readx <= 1;
+			begin
+			      count_err <= (((parallel_outx[`PL_SZ + `ADDR_SZ-1:`ADDR_SZ] - itemx [`PL_SZ + `ADDR_SZ-1:`ADDR_SZ]) == 1) & (parallel_outx != 0));
+			      itemx <= parallel_outx;
+			end 
+		      end else
+		      rd_readx <= 0;
 		
 		end
 		    

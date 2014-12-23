@@ -82,11 +82,7 @@ module routing_logic(	id, clk, reset,
 	
 	wire [0:`DIRECTIONS-1] gnt_v[0:`DIRECTIONS-1];
 
-    routing_table  rtable_n (id, reset, table_addr[`NORTH], table_data[`NORTH]);
-    routing_table  rtable_e (id, reset, table_addr[`EAST], table_data[`EAST]);
-    routing_table  rtable_s (id, reset, table_addr[`SOUTH], table_data[`SOUTH]);
-    routing_table  rtable_w (id, reset, table_addr[`WEST], table_data[`WEST]);	
-	
+
 	genvar i,j;
 
 	generate
@@ -98,7 +94,7 @@ module routing_logic(	id, clk, reset,
 	  // routing tables
 
 	  for(i=0; i<`DIRECTIONS; i=i+1) begin: rtables
-	      routing_table  rtable_w (id, reset, table_addr[i], table_data[i]);
+	      routing_table  rtable (id, reset, table_addr[i], table_data[i]);
 	  
 	  end
 	  

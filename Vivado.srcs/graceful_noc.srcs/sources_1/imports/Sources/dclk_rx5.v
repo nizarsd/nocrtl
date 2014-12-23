@@ -1,5 +1,5 @@
 
-module dclk_rx (rclk, wclk, reset, valid, channel_busy, item_read, serial_in, parallel_out);
+(* dont_touch = "true" *)  module dclk_rx (rclk, wclk, reset, valid, channel_busy, item_read, serial_in, parallel_out);
  	`include "constants.v"
 // 	parameter routerid=-1;
 	parameter port="unknown";
@@ -20,28 +20,28 @@ module dclk_rx (rclk, wclk, reset, valid, channel_busy, item_read, serial_in, pa
 
 	// state 0 = idle, 1 = receiving, 2 = delivering item
 	
- 	reg [1:0] state; // write state 
+ 	/*(* dont_touch = "true" *)*/  (* mark_debug = "true" *)  reg [1:0] state; // write state 
 	
 	reg [1:0] valid_reg;
 	
 	reg [1:0] read_reg;
 	
-	reg [`HDR_SZ + `PL_SZ + `ADDR_SZ:0] item;
+	(* dont_touch = "true" *) reg [`HDR_SZ + `PL_SZ + `ADDR_SZ:0] item;
 
 	wire rd_valid, wr_valid, wr_read;
 	
-	reg rd_read;
+	(* mark_debug = "true" *) reg rd_read;
 	
 	assign parallel_out = item[`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0];
 	
-	assign rd_valid = valid_reg[1];
+	(* mark_debug = "true" *)  assign rd_valid = valid_reg[1];
 	
-	assign wr_read =  read_reg[1];    // synchronised to wclk (rd -> wr)
+	(* dont_touch = "true" *)  assign wr_read =  read_reg[1];    // synchronised to wclk (rd -> wr)
 	
 		
 	assign channel_busy = (state != `STATE_IDLE);
 	
-	assign wr_valid = (state == `STATE_VALID);
+	(* dont_touch = "true" *)  assign wr_valid = (state == `STATE_VALID);
 
 	assign valid =  rd_valid & !rd_read;  // synchronised to rclk (wr -> rd)
 	
@@ -59,16 +59,16 @@ module dclk_rx (rclk, wclk, reset, valid, channel_busy, item_read, serial_in, pa
 		  end   
 		else 
 		begin
-		      valid_reg[0] <= wr_valid;  // synchronise "valid" to rclk
+		    valid_reg[0] <= wr_valid;  // synchronise "valid" to rclk
+		    
+		    valid_reg[1] <= valid_reg[0];
 		      
-		      valid_reg[1] <= valid_reg[0];
-			
-		      if (rd_valid & item_read)  
-			begin
-			    rd_read <= 1;
-			end 
-
-			if (!rd_valid & rd_read) 
+		    if (item_read)  
+		      begin
+			  rd_read <= 1;
+		      end 
+		      
+		      if (!rd_valid & rd_read) 
 			begin
 			  rd_read <= 0;
 			end

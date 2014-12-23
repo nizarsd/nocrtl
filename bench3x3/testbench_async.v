@@ -10,7 +10,7 @@
 // `include "../par_clib/par_source_data.v"
 `include "../par_clib/par_rx_logic.v"
 `include "../par_clib/par_moody_sink.v"
-`include "../par_clib/routing_table.v"	
+`include "../par_clib/routing_table_comb.v"	
 `include "../par_clib/rr_arbiter.v"
 `include "../par_clib/ch_rx_logic.v"
 
@@ -167,6 +167,33 @@ module testbench();
 	par_moody_sink #(8, SINK_HOSP) sink8 (clk[8], reset, sink_busy[8], sink_data[8], sink_valid[8]);
 	
 	
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] parallel_outx;   
+	reg  [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0] itemx;   
+	wire validx;
+	wire channel_busyx;
+	assign rx_data_w0 = tx_data[0][1];
+	reg rd_readx;
+	 dclk_rx rx_w0 (
+		    clk[0], 
+		    clk[1], 
+		    reset, 
+		    validx, 
+		    channel_busyx, 
+		    1, 
+		    rx_data_w0, 
+		    parallel_outx);
+		    
+	    always @(posedge clk[0]) begin
+	
+		if (reset)  begin
+		     rd_readx <= 0;
+		end
+			
+		else 
+		    if (validx) rd_readx <= 1;
+		     else rd_readx <= 0;
+
+	    end	
 		
 	// connections:
 	// -----------------------------------------------------------------
