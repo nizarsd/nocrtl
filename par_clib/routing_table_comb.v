@@ -6,9 +6,9 @@ module routing_table(id, table_addr, table_data);
 	
 	wire [1:0] x_local, y_local, x_dest, y_dest;
 	
-	return_x local_x(id, x_local, y_local);
+	return_xy local_xy(id, x_local, y_local);
 	
-	return_x dest_xy(table_addr, x_dest, y_dest);
+	return_xy dest_xy(table_addr, x_dest, y_dest);
 	
     assign table_data = 
 		  (x_dest > x_local) ? `EAST  : (
