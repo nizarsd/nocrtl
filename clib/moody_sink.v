@@ -9,7 +9,7 @@ module serial_moody_sink (clk, reset, channel_busy, serial_in);
 	
 	output channel_busy;
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] data;
+	wire [`PAYLOAD_SIZE+`ADDR_SZ-1:0] data;
 	
 	moody_sink #(id, hospitality) s1 (.clk(clk), .reset(reset), .data(data), .req(req), .busy(busy));
 
@@ -28,11 +28,11 @@ module moody_sink (clk, reset, data, req, busy);
 	
 	output busy;
 	
-	input [`PAYLOAD_SIZE+`ADDR_BITS-1:0] data;
+	input [`PAYLOAD_SIZE+`ADDR_SZ-1:0] data;
 	
 	reg [`PAYLOAD_SIZE-1:0] register;
 
-	reg [`ADDR_BITS-1:0] dest_addr;
+	reg [`ADDR_SZ-1:0] dest_addr;
 	
 	reg busy;
 	
@@ -47,10 +47,10 @@ module moody_sink (clk, reset, data, req, busy);
 		end else begin
 			rand <= $random;
 			if (req & !busy) begin
-				register <= data[`PAYLOAD_SIZE+`ADDR_BITS-1:`ADDR_BITS];
-				dest_addr <= data[`ADDR_BITS-1:0];
-// 				if (id != -1) $display ("sink %d rx  : %c <<--", id, data[`PAYLOAD_SIZE+`ADDR_BITS-1:`ADDR_BITS]);
-				if (id != -1) $display ("##,rx,%d,%d",id, data[`PAYLOAD_SIZE+`ADDR_BITS-1:`ADDR_BITS]);
+				register <= data[`PAYLOAD_SIZE+`ADDR_SZ-1:`ADDR_SZ];
+				dest_addr <= data[`ADDR_SZ-1:0];
+// 				if (id != -1) $display ("sink %d rx  : %c <<--", id, data[`PAYLOAD_SIZE+`ADDR_SZ-1:`ADDR_SZ]);
+				if (id != -1) $display ("##,rx,%d,%d",id, data[`PAYLOAD_SIZE+`ADDR_SZ-1:`ADDR_SZ]);
 			end
 			busy <= (rand >= hospitality);
 		end			

@@ -19,7 +19,7 @@ module router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, table_addr, table
 	
 	assign rx_busy = {rx_l_busy, rx_w_busy,  rx_s_busy, rx_e_busy, rx_n_busy};
 	
-	assign rx_l_data = rx_data[4];
+	assign rx_data_l = rx_data[4];
 	assign rx_w_data = rx_data[3];
 	assign rx_s_data = rx_data[2];
 	assign rx_e_data = rx_data[1];
@@ -31,7 +31,7 @@ module router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, table_addr, table
 	assign tx_e_busy = tx_busy[1];
 	assign tx_n_busy = tx_busy[0];
 	
-	assign tx_data = {tx_l_data, tx_w_data, tx_s_data, tx_e_data, tx_n_data};	
+	assign tx_data = {tx_data_l, tx_w_data, tx_s_data, tx_e_data, tx_n_data};	
 	
 	// Interface and internal nets:
 	// -----------------------------------------------------------------
@@ -40,17 +40,17 @@ module router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, table_addr, table
 	
 	//output  link_tx_n_data;
 	
-	output [`ADDR_BITS-1:0] table_addr;
+	output [`ADDR_SZ-1:0] table_addr;
 	
 	input [`BITS_DIR-1:0] table_data;
 	
 	//wire full, empty;	
 
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] fifo_item_in;
+	wire [`PAYLOAD_SIZE+`ADDR_SZ-1:0] fifo_item_in;
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] fifo_item_out;
+	wire [`PAYLOAD_SIZE+`ADDR_SZ-1:0] fifo_item_out;
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] tx_item_out;
+	wire [`PAYLOAD_SIZE+`ADDR_SZ-1:0] tx_item_out;
 
 	wire read, write;
 	
@@ -64,11 +64,11 @@ module router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, table_addr, table
 	// RX :
 	// -----------------------------------------------------------------
 	
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] n_item;
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] s_item;
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] e_item;
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] w_item;
-	wire [`PAYLOAD_SIZE+`ADDR_BITS-1:0] l_item;	
+	wire [`PAYLOAD_SIZE+`ADDR_SZ-1:0] n_item;
+	wire [`PAYLOAD_SIZE+`ADDR_SZ-1:0] s_item;
+	wire [`PAYLOAD_SIZE+`ADDR_SZ-1:0] e_item;
+	wire [`PAYLOAD_SIZE+`ADDR_SZ-1:0] w_item;
+	wire [`PAYLOAD_SIZE+`ADDR_SZ-1:0] l_item;	
 	wire tx_active [`DIRECTIONS-1:0];
 	
 	rx #(routerid,"north") rx_n
@@ -104,7 +104,7 @@ module router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, table_addr, table
 	rx #(routerid,"local") rx_l
 	(
 		.clk(clk), .reset(reset),
-		.channel_busy(rx_l_busy), .serial_in (rx_l_data),
+		.channel_busy(rx_l_busy), .serial_in (rx_data_l),
 		.valid(l_valid), .parallel_out(l_item), .item_read(l_read)
 	);		 	 	 		 
 	
@@ -182,7 +182,7 @@ module router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, table_addr, table
 	(
 		.clk(clk), .reset(reset),
 		.req(l_ena), .tx_busy(l_busy),.tx_active(tx_active[4]),
-		.channel_busy(tx_l_busy), .serial_out(tx_l_data),
+		.channel_busy(tx_l_busy), .serial_out(tx_data_l),
 		.parallel_in(fifo_item_out)
 	);
 	

@@ -33,10 +33,10 @@ module testbench();
 	wire [`DIRECTIONS-1:0] tx_busy [`NUM_NODES-1:0];
 	wire [`DIRECTIONS-2:0] tx_data [`NUM_NODES-1:0];
 	
-	wire  rx_l_valid [`NUM_NODES-1:0];
-	wire  tx_l_valid [`NUM_NODES-1:0];
-	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  rx_l_data [`NUM_NODES-1:0];
-	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  tx_l_data [`NUM_NODES-1:0];
+	wire  rx_valid_l [`NUM_NODES-1:0];
+	wire  tx_valid_l [`NUM_NODES-1:0];
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  rx_data_l [`NUM_NODES-1:0];
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  tx_data_l [`NUM_NODES-1:0];
 	
 	wire  router_active [`NUM_NODES-1:0];
 	wire [19:0] flit_counter [`NUM_NODES-1:0];
@@ -61,10 +61,10 @@ module testbench();
 
 	
 	async_router  
-	  router0 (0, clk[0], wclk[0], clk_fw[0], reset, rx_busy[0], rx_data[0], rx_l_data[0], rx_l_valid[0], tx_busy[0], tx_data[0], tx_l_data[0], tx_l_valid[0], flit_counter[0]);	
+	  router0 (0, clk[0], wclk[0], clk_fw[0], reset, rx_busy[0], rx_data[0], rx_data_l[0], rx_valid_l[0], tx_busy[0], tx_data[0], tx_data_l[0], tx_valid_l[0], flit_counter[0]);	
 	
 	async_router  
-	  router1 (1, clk[1], wclk[1], clk_fw[1], reset, rx_busy[1], rx_data[1], rx_l_data[1], rx_l_valid[1], tx_busy[1], tx_data[1], tx_l_data[1], tx_l_valid[1], flit_counter[1]);	
+	  router1 (1, clk[1], wclk[1], clk_fw[1], reset, rx_busy[1], rx_data[1], rx_data_l[1], rx_valid_l[1], tx_busy[1], tx_data[1], tx_data_l[1], tx_valid_l[1], flit_counter[1]);	
 	  
 	  
 	  NI  NI0 (     

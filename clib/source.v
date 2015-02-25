@@ -9,7 +9,7 @@ module serial_source (en_w, ip_traffic, clk, reset, serial_out, busy, pir);
 	
 	output serial_out;
 	
-	wire [`ADDR_BITS-1:0] data;
+	wire [`ADDR_SZ-1:0] data;
 	
 	source #(.NODE_ID(NODE_ID)) s1 (en_w, ip_traffic, clk, reset, data, req, tx_busy, pir);
 	
@@ -31,13 +31,13 @@ module source (en_w, ip_traffic, clk, reset, data, req, busy, pir);
 	
 	output req;
 
-	output [`ADDR_BITS-1:0] data;
+	output [`ADDR_SZ-1:0] data;
 
 	
 	reg [`NUM_NODES-1:0] reg_traffic;
-	reg [`ADDR_BITS-1:0] data;
+	reg [`ADDR_SZ-1:0] data;
 	reg [7:0] counter;
-	reg [`ADDR_BITS:0] dest_counter; // When you need a counter to span all the nodes it size must be `ADDR_BITS not `ADDR_BITS-1 !!
+	reg [`ADDR_SZ:0] dest_counter; // When you need a counter to span all the nodes it size must be `ADDR_SZ not `ADDR_SZ-1 !!
 	
 	reg req;	
 	reg delay;

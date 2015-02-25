@@ -1,3 +1,6 @@
+# format assumed
+#$display("##,tx,%d,%d",id,dest);
+#$display("##,rx,%d,%d",src,id);
 
 use Switch;
 $n=9;
@@ -65,6 +68,7 @@ for ($j=0; $j < $n; $j++){
       print "$k - [$j]->[$i]=$sent[$i][$j], [$i]<-[$j]=$rec[$i][$j], $dlost[$i][$j]\n";
     }
   }
+  print " \n";
 }
       print " \n \n";
 

@@ -14,13 +14,13 @@ module rx_logic(item_out, write, full,
 	
 	output write;
 	
-	input [`PAYLOAD_SIZE+`ADDR_BITS-1:0] n_item;
-	input [`PAYLOAD_SIZE+`ADDR_BITS-1:0] s_item;
-	input [`PAYLOAD_SIZE+`ADDR_BITS-1:0] e_item;
-	input [`PAYLOAD_SIZE+`ADDR_BITS-1:0] w_item;
-	input [`PAYLOAD_SIZE+`ADDR_BITS-1:0] l_item;
+	input [`PAYLOAD_SIZE+`ADDR_SZ-1:0] n_item;
+	input [`PAYLOAD_SIZE+`ADDR_SZ-1:0] s_item;
+	input [`PAYLOAD_SIZE+`ADDR_SZ-1:0] e_item;
+	input [`PAYLOAD_SIZE+`ADDR_SZ-1:0] w_item;
+	input [`PAYLOAD_SIZE+`ADDR_SZ-1:0] l_item;
 	
-	output [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_out;
+	output [`PAYLOAD_SIZE+`ADDR_SZ-1:0] item_out;
 	
 	wire n_sel, s_sel, e_sel, w_sel, l_sel;
 	

@@ -13,9 +13,9 @@ module source_from_memory (clk, reset, data, req, busy, send);
 	
 	output req;
 	
-	output [`PAYLOAD_SIZE+`ADDR_BITS-1:0] data;
+	output [`PAYLOAD_SIZE+`ADDR_SZ-1:0] data;
 	
-	reg [`PAYLOAD_SIZE+`ADDR_BITS-1:0] data;
+	reg [`PAYLOAD_SIZE+`ADDR_SZ-1:0] data;
 	
 	reg counter;
 	
@@ -31,13 +31,13 @@ module source_from_memory (clk, reset, data, req, busy, send);
 
 	reg [7:0] rand;
 	
-	reg [`ADDR_BITS-1:0] memory [`NUM_NODES-1:0];
+	reg [`ADDR_SZ-1:0] memory [`NUM_NODES-1:0];
 	
 // 	reg can_send;
 	
 	initial $readmemh(traffic_file, memory, 0, dests-1) ;
 	
-	wire [`ADDR_BITS-1:0] dest;
+	wire [`ADDR_SZ-1:0] dest;
 	
 	assign dest=memory[index];
 	
@@ -82,9 +82,9 @@ module source_from_memory (clk, reset, data, req, busy, send);
 						if (id==0) begin
 // 						if (id != dest) begin
 						      
-						      data[`ADDR_BITS-1:0] <= dest;
+						      data[`ADDR_SZ-1:0] <= dest;
 
-						      data[`PAYLOAD_SIZE+`ADDR_BITS-1:`ADDR_BITS]<=id;
+						      data[`PAYLOAD_SIZE+`ADDR_SZ-1:`ADDR_SZ]<=id;
 						
 						      req <= 1;
 						      

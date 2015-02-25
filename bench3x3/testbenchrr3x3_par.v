@@ -40,10 +40,10 @@ wire clk,reset;
 	wire [4:0] tx_busy [`NUM_NODES-1:0];
 	wire [3:0] tx_data [`NUM_NODES-1:0];
 	
-	wire  rx_l_valid [`NUM_NODES-1:0];
-	wire  tx_l_valid [`NUM_NODES-1:0];
-	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  rx_l_data [`NUM_NODES-1:0];
-	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  tx_l_data [`NUM_NODES-1:0];
+	wire  rx_valid_l [`NUM_NODES-1:0];
+	wire  tx_valid_l [`NUM_NODES-1:0];
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  rx_data_l [`NUM_NODES-1:0];
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  tx_data_l [`NUM_NODES-1:0];
 	
 	
 	wire  router_active [`NUM_NODES-1:0];
@@ -56,15 +56,15 @@ wire clk,reset;
 // 		end
 // 	endgenerate
 	
-	par_router  #(0,"../routing_tables/0.txt") router0 (clk, reset, rx_busy[0], rx_data[0], rx_l_data[0], rx_l_valid[0], tx_busy[0], tx_data[0], tx_l_data[0], tx_l_valid[0], flit_counter[0]);	
-	par_router  #(1,"../routing_tables/1.txt") router1 (clk, reset, rx_busy[1], rx_data[1], rx_l_data[1], rx_l_valid[1], tx_busy[1], tx_data[1], tx_l_data[1], tx_l_valid[1], flit_counter[1]);	
-	par_router  #(2,"../routing_tables/2.txt") router2 (clk, reset, rx_busy[2], rx_data[2], rx_l_data[2], rx_l_valid[2], tx_busy[2], tx_data[2], tx_l_data[2], tx_l_valid[2], flit_counter[2]);	
-	par_router  #(3,"../routing_tables/3.txt") router3 (clk, reset, rx_busy[3], rx_data[3], rx_l_data[3], rx_l_valid[3], tx_busy[3], tx_data[3], tx_l_data[3], tx_l_valid[3], flit_counter[3]);	
-	par_router  #(4,"../routing_tables/4.txt") router4 (clk, reset, rx_busy[4], rx_data[4], rx_l_data[4], rx_l_valid[4], tx_busy[4], tx_data[4], tx_l_data[4], tx_l_valid[4], flit_counter[4]);	
-	par_router  #(5,"../routing_tables/5.txt") router5 (clk, reset, rx_busy[5], rx_data[5], rx_l_data[5], rx_l_valid[5], tx_busy[5], tx_data[5], tx_l_data[5], tx_l_valid[5], flit_counter[5]);	
-	par_router  #(6,"../routing_tables/6.txt") router6 (clk, reset, rx_busy[6], rx_data[6], rx_l_data[6], rx_l_valid[6], tx_busy[6], tx_data[6], tx_l_data[6], tx_l_valid[6], flit_counter[6]);	
-	par_router  #(7,"../routing_tables/7.txt") router7 (clk, reset, rx_busy[7], rx_data[7], rx_l_data[7], rx_l_valid[7], tx_busy[7], tx_data[7], tx_l_data[7], tx_l_valid[7], flit_counter[7]);	
-	par_router  #(8,"../routing_tables/8.txt") router8 (clk, reset, rx_busy[8], rx_data[8], rx_l_data[8], rx_l_valid[8], tx_busy[8], tx_data[8], tx_l_data[8], tx_l_valid[8], flit_counter[8]);	
+	par_router  #(0,"../routing_tables/0.txt") router0 (clk, reset, rx_busy[0], rx_data[0], rx_data_l[0], rx_valid_l[0], tx_busy[0], tx_data[0], tx_data_l[0], tx_valid_l[0], flit_counter[0]);	
+	par_router  #(1,"../routing_tables/1.txt") router1 (clk, reset, rx_busy[1], rx_data[1], rx_data_l[1], rx_valid_l[1], tx_busy[1], tx_data[1], tx_data_l[1], tx_valid_l[1], flit_counter[1]);	
+	par_router  #(2,"../routing_tables/2.txt") router2 (clk, reset, rx_busy[2], rx_data[2], rx_data_l[2], rx_valid_l[2], tx_busy[2], tx_data[2], tx_data_l[2], tx_valid_l[2], flit_counter[2]);	
+	par_router  #(3,"../routing_tables/3.txt") router3 (clk, reset, rx_busy[3], rx_data[3], rx_data_l[3], rx_valid_l[3], tx_busy[3], tx_data[3], tx_data_l[3], tx_valid_l[3], flit_counter[3]);	
+	par_router  #(4,"../routing_tables/4.txt") router4 (clk, reset, rx_busy[4], rx_data[4], rx_data_l[4], rx_valid_l[4], tx_busy[4], tx_data[4], tx_data_l[4], tx_valid_l[4], flit_counter[4]);	
+	par_router  #(5,"../routing_tables/5.txt") router5 (clk, reset, rx_busy[5], rx_data[5], rx_data_l[5], rx_valid_l[5], tx_busy[5], tx_data[5], tx_data_l[5], tx_valid_l[5], flit_counter[5]);	
+	par_router  #(6,"../routing_tables/6.txt") router6 (clk, reset, rx_busy[6], rx_data[6], rx_data_l[6], rx_valid_l[6], tx_busy[6], tx_data[6], tx_data_l[6], tx_valid_l[6], flit_counter[6]);	
+	par_router  #(7,"../routing_tables/7.txt") router7 (clk, reset, rx_busy[7], rx_data[7], rx_data_l[7], rx_valid_l[7], tx_busy[7], tx_data[7], tx_data_l[7], tx_valid_l[7], flit_counter[7]);	
+	par_router  #(8,"../routing_tables/8.txt") router8 (clk, reset, rx_busy[8], rx_data[8], rx_data_l[8], rx_valid_l[8], tx_busy[8], tx_data[8], tx_data_l[8], tx_valid_l[8], flit_counter[8]);	
 	
 	
 

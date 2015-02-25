@@ -5,12 +5,12 @@ module tx_logic (item_in, read, empty, table_addr, table_data, item_out, n_ena, 
 	
 	output read, s_ena, n_ena, e_ena, w_ena, l_ena;
 	
-	input [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_in;
-	output [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_out;
-	output [`ADDR_BITS-1:0] table_addr;
+	input [`PAYLOAD_SIZE+`ADDR_SZ-1:0] item_in;
+	output [`PAYLOAD_SIZE+`ADDR_SZ-1:0] item_out;
+	output [`ADDR_SZ-1:0] table_addr;
 	input [`BITS_DIR-1:0] table_data;
 	
-	assign table_addr = item_in[`ADDR_BITS-1:0];
+	assign table_addr = item_in[`ADDR_SZ-1:0];
 	
 	assign item_out = item_in;
 

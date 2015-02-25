@@ -115,7 +115,7 @@ module async_gen(clk, reset, send);
         begin
 		$display("Start of simulation ...");
 		
-		$dumpfile("dump.vcd");
+		$dumpfile("dump_async.vcd");
 		
 		$dumpvars();
 		

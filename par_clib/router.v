@@ -19,7 +19,7 @@ module router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, table_addr, table
 	
 	assign rx_busy = {rx_l_busy, rx_w_busy,  rx_s_busy, rx_e_busy, rx_n_busy};
 	
-	assign rx_l_data = rx_data[4];
+	assign rx_data_l = rx_data[4];
 	assign rx_w_data = rx_data[3];
 	assign rx_s_data = rx_data[2];
 	assign rx_e_data = rx_data[1];
@@ -31,7 +31,7 @@ module router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, table_addr, table
 	assign tx_e_busy = tx_busy[1];
 	assign tx_n_busy = tx_busy[0];
 	
-	assign tx_data = {tx_l_data, tx_w_data, tx_s_data, tx_e_data, tx_n_data};	
+	assign tx_data = {tx_data_l, tx_w_data, tx_s_data, tx_e_data, tx_n_data};	
 	
 	// Interface and internal nets:
 	// -----------------------------------------------------------------
@@ -104,7 +104,7 @@ module router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, table_addr, table
 	rx #(routerid,"local") rx_l
 	(
 		.clk(clk), .reset(reset),
-		.channel_busy(rx_l_busy), .serial_in (rx_l_data),
+		.channel_busy(rx_l_busy), .serial_in (rx_data_l),
 		.valid(l_valid), .parallel_out(l_item), .item_read(l_read)
 	);		 	 	 		 
 	
@@ -182,7 +182,7 @@ module router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, table_addr, table
 	(
 		.clk(clk), .reset(reset),
 		.req(l_ena), .tx_busy(l_busy),.tx_active(tx_active[4]),
-		.channel_busy(tx_l_busy), .serial_out(tx_l_data),
+		.channel_busy(tx_l_busy), .serial_out(tx_data_l),
 		.parallel_in(fifo_item_out)
 	);
 	

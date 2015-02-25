@@ -83,9 +83,8 @@ module routing_logic(	id, clk, reset,
 	  // routing tables
 
 	  for(i=0; i<`DIRECTIONS; i=i+1) begin: rtables
-	  
 	      routing_table  rtable (id, table_addr[i], table_data[i]);
-	      
+	  
 	  end
 	  
 	  // tx channel enables  and rx channel reads
@@ -101,6 +100,7 @@ module routing_logic(	id, clk, reset,
 				      gnt_v[`LOCAL][i];
 		    
     		    assign read[i] =  
+// 				      req[i][i] |   // this is a corrupted packet and can't be routed (ignore it)
 				      gnt_v[i][`NORTH] |
 				      gnt_v[i][`EAST]  |
 				      gnt_v[i][`SOUTH] | 
@@ -109,21 +109,26 @@ module routing_logic(	id, clk, reset,
 
 	  end
 
-  	  
 	  // requests to arbitration
 	  for(i=0; i<`DIRECTIONS; i=i+1) begin: reqs
 	      for(j=0; j<`DIRECTIONS; j=j+1) begin: reqs
 
 		      if (j!=i)  assign req[j][i] = !empty[j] & (table_data[j] == i) & !busy[i];
-
 	      end
 	  end
+
+// 	  for(i=0; i<`DIRECTIONS; i=i+1) begin: reqs2
+// 
+// 		 assign req[i][i] = !empty[i] & (table_data[i] == i);
+// 		
+// 	  end
+
 	  
 	  // valid grants
 	  for(i=0; i<`DIRECTIONS; i=i+1) begin: gnts
 	      for(j=0; j<`DIRECTIONS; j=j+1) begin: gnts
 
-		      if (j!=i)      assign gnt_v[i][j] = gnt[i][j] & !busy[j] & !empty[i] & (table_data[i] == j);
+		      if (j!=i)  assign gnt_v[i][j] = gnt[i][j] & !busy[j] & !empty[i] & (table_data[i] == j);
 
 	      end
 	  end
@@ -131,10 +136,7 @@ module routing_logic(	id, clk, reset,
 	endgenerate
 
 	
-
-	
 	// arbitration
-	
 	rr_arbiter n_arbiter (clk, reset,
 			      req[`LOCAL][`NORTH], req[`EAST][`NORTH], req[`SOUTH][`NORTH], req[`WEST][`NORTH],
 			      gnt[`LOCAL][`NORTH], gnt[`EAST][`NORTH], gnt[`SOUTH][`NORTH], gnt[`WEST][`NORTH]
@@ -155,8 +157,8 @@ module routing_logic(	id, clk, reset,
 			      );
 	
 	rr_arbiter l_arbiter (clk, reset, 
-			      req[`SOUTH][`LOCAL], req[`NORTH][`LOCAL], req[`EAST][`LOCAL], req[`WEST][`LOCAL],
-			      gnt[`SOUTH][`LOCAL], gnt[`NORTH][`LOCAL], gnt[`EAST][`LOCAL], gnt[`WEST][`LOCAL] 
+			      req[`SOUTH][`LOCAL], req[`NORTH][`LOCAL], req[`WEST][`LOCAL], req[`EAST][`LOCAL], 
+			      gnt[`SOUTH][`LOCAL], gnt[`NORTH][`LOCAL], gnt[`WEST][`LOCAL], gnt[`EAST][`LOCAL]
 			      );
 	
 	
@@ -191,10 +193,10 @@ module routing_logic(	id, clk, reset,
 				  0)));
 	
 	assign item_out[`LOCAL] = 
-				  gnt_v[`NORTH][`LOCAL] ? n_item_in : (
+				  gnt_v[`WEST][`LOCAL]  ? w_item_in : (
 				  gnt_v[`EAST][`LOCAL]  ? e_item_in : (
 				  gnt_v[`SOUTH][`LOCAL] ? s_item_in : (
-				  gnt_v[`WEST][`LOCAL]  ? w_item_in : 
+				  gnt_v[`NORTH][`LOCAL] ? n_item_in : 
 				  0))); 	
 	
 endmodule

@@ -38,8 +38,8 @@ while (<$fid>)
 					$s = @arr[1];
 					$r = @arr[2];
 					$p = @arr[3];
-					print "assign rx_l_data[$r] = source_data[$s];\n";
-					print "assign rx_l_valid[$r] = source_valid[$s];\n";
+					print "assign rx_data_l[$r] = source_data[$s];\n";
+					print "assign rx_valid_l[$r] = source_valid[$s];\n";
 					print "assign source_busy[$s] = rx_busy[$r][$p];\n";
 					print "\n";
 				}
@@ -48,8 +48,8 @@ while (<$fid>)
 					$r = @arr[1];
 					$p = @arr[2];
 					$s = @arr[3];
-					print "assign sink_data[$s] = tx_l_data[$r];\n";
-					print "assign sink_valid[$s] = tx_l_valid[$r];\n";
+					print "assign sink_data[$s] = tx_data_l[$r];\n";
+					print "assign sink_valid[$s] = tx_valid_l[$r];\n";
 					print "assign tx_busy[$r][$p] = sink_busy[$s];\n";
 					print "\n";
 				}

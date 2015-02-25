@@ -1,5 +1,5 @@
 Start of simulation ...
-VCD info: dumpfile dump.vcd opened for output.
+VCD info: dumpfile dump_async.vcd opened for output.
 Sending data ...
 WARNING: ./../par_clib/par_source_traffic.v:62: $readmemh(../traffic/1.txt): Too many words in the file for the requested range [0:8].
 WARNING: ./../par_clib/par_source_traffic.v:62: $readmemh(../traffic/1.txt): Too many words in the file for the requested range [0:8].
@@ -2151,14 +2151,14 @@ Cooling down ...
 ##,rx, 2,  6
 ##,rx, 1,  6
 ##,rx, 4,  3
-##,rx, 4,  1
+##,rx, 4,  5
 ##,rx, 1,  0
 ##,rx, 6,  5
 ##,rx, 4,  8
-##,rx, 4,  5
 ##,rx, 2,  4
 ##,rx, 7,  6
 ##,rx, 5,  0
+##,rx, 4,  1
 ##,rx, 7,  8
 ##,rx, 7,  8
 ##,rx, 7,  2

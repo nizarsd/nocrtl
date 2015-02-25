@@ -25,7 +25,7 @@ module rr_router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, flit_counter);
 	assign rx_e_data = rx_data[`EAST ];
 	assign rx_s_data = rx_data[`SOUTH];
 	assign rx_w_data = rx_data[`WEST ];
-	assign rx_l_data = rx_data[`LOCAL];
+	assign rx_data_l = rx_data[`LOCAL];
 	
 	assign tx_n_busy = tx_busy[`NORTH];
 	assign tx_e_busy = tx_busy[`EAST ];
@@ -33,7 +33,7 @@ module rr_router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, flit_counter);
 	assign tx_w_busy = tx_busy[`WEST ];
 	assign tx_l_busy = tx_busy[`LOCAL];
 	
-	assign tx_data = {tx_l_data, tx_w_data, tx_s_data, tx_e_data, tx_n_data};	
+	assign tx_data = {tx_data_l, tx_w_data, tx_s_data, tx_e_data, tx_n_data};	
 	
 	// Interface and internal nets:
 	// -----------------------------------------------------------------
@@ -115,7 +115,7 @@ module rr_router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, flit_counter);
 	rx #(routerid,"local") rx_l
 	(
 		.clk(clk), .reset(reset),
-		.channel_busy(rx_l_busy), .serial_in (rx_l_data),
+		.channel_busy(rx_l_busy), .serial_in (rx_data_l),
 		.valid(valid[`LOCAL]), .parallel_out(item[`LOCAL]), .item_read(item_read[`LOCAL])
 	);		 	 	 		 
 	
@@ -224,7 +224,7 @@ module rr_router (clk, reset, rx_busy, rx_data, tx_busy, tx_data, flit_counter);
 	(
 		.clk(clk), .reset(reset),
 		.req(l_ena), .tx_busy(l_busy),.tx_active(tx_active[`LOCAL]),
-		.channel_busy(tx_l_busy), .serial_out(tx_l_data),
+		.channel_busy(tx_l_busy), .serial_out(tx_data_l),
 		.parallel_in(rr_item_out[`LOCAL])
 	);
 	

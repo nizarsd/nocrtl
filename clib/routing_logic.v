@@ -25,11 +25,11 @@ module routing_logic(	clk, reset,
 	output n_ena,   e_ena,   s_ena,   w_ena,   l_ena;
 	
 	
-	input  [`PAYLOAD_SIZE+`ADDR_BITS-1:0] n_item_in, e_item_in, s_item_in, w_item_in, l_item_in;
+	input  [`PAYLOAD_SIZE+`ADDR_SZ-1:0] n_item_in, e_item_in, s_item_in, w_item_in, l_item_in;
 	
-	output [`PAYLOAD_SIZE+`ADDR_BITS-1:0] n_item_out, e_item_out, s_item_out, w_item_out, l_item_out;
+	output [`PAYLOAD_SIZE+`ADDR_SZ-1:0] n_item_out, e_item_out, s_item_out, w_item_out, l_item_out;
 	
-	wire  /*reg*/ [`ADDR_BITS-1:0] n_table_addr, e_table_addr, s_table_addr, w_table_addr, l_table_addr;
+	wire  /*reg*/ [`ADDR_SZ-1:0] n_table_addr, e_table_addr, s_table_addr, w_table_addr, l_table_addr;
 	
 	wire [`BITS_DIR-1:0]  n_table_data, e_table_data, s_table_data, w_table_data, l_table_data ;
 	
@@ -65,21 +65,21 @@ module routing_logic(	clk, reset,
 // 		     w_table_addr <= 0;
 // 		     l_table_addr <= 0;
 // 		end else begin
-// 		     n_table_addr <= n_item_in[`ADDR_BITS-1:0];
-// 		     e_table_addr <= e_item_in[`ADDR_BITS-1:0];
-// 		     s_table_addr <= s_item_in[`ADDR_BITS-1:0];
-// 		     w_table_addr <= w_item_in[`ADDR_BITS-1:0];
-// 		     l_table_addr <= l_item_in[`ADDR_BITS-1:0];
+// 		     n_table_addr <= n_item_in[`ADDR_SZ-1:0];
+// 		     e_table_addr <= e_item_in[`ADDR_SZ-1:0];
+// 		     s_table_addr <= s_item_in[`ADDR_SZ-1:0];
+// 		     w_table_addr <= w_item_in[`ADDR_SZ-1:0];
+// 		     l_table_addr <= l_item_in[`ADDR_SZ-1:0];
 // 		end
 // 	end
 // 		
 		
 	
-	assign n_table_addr = n_item_in[`ADDR_BITS-1:0];
-	assign e_table_addr = e_item_in[`ADDR_BITS-1:0];
-	assign s_table_addr = s_item_in[`ADDR_BITS-1:0];
-	assign w_table_addr = w_item_in[`ADDR_BITS-1:0];
-	assign l_table_addr = l_item_in[`ADDR_BITS-1:0];
+	assign n_table_addr = n_item_in[`ADDR_SZ-1:0];
+	assign e_table_addr = e_item_in[`ADDR_SZ-1:0];
+	assign s_table_addr = s_item_in[`ADDR_SZ-1:0];
+	assign w_table_addr = w_item_in[`ADDR_SZ-1:0];
+	assign l_table_addr = l_item_in[`ADDR_SZ-1:0];
 	
 
 	

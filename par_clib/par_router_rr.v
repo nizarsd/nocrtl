@@ -1,4 +1,4 @@
-module par_router (clk, reset, rx_busy, rx_data, rx_l_data, rx_l_valid, tx_busy, tx_data, tx_l_data, tx_l_valid, flit_counter);
+module par_router (clk, reset, rx_busy, rx_data, rx_data_l, rx_valid_l, tx_busy, tx_data, tx_data_l, tx_valid_l, flit_counter);
 
 	parameter routerid=-1;
 	
@@ -19,12 +19,12 @@ module par_router (clk, reset, rx_busy, rx_data, rx_l_data, rx_l_valid, tx_busy,
 	input  [`DIRECTIONS-1:0] tx_busy;
 	output [`DIRECTIONS-2:0] tx_data;
 	
-	input [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  rx_l_data;  // parallel for local port
-	output [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  tx_l_data;  
+	input [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  rx_data_l;  // parallel for local port
+	output [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  tx_data_l;  
 
-	output  tx_l_valid;
+	output  tx_valid_l;
 	
-	input   rx_l_valid;
+	input   rx_valid_l;
 	
 	assign rx_busy = {rx_l_busy, rx_w_busy,  rx_s_busy, rx_e_busy, rx_n_busy};
 	
@@ -122,7 +122,7 @@ module par_router (clk, reset, rx_busy, rx_data, rx_l_data, rx_l_valid, tx_busy,
 // 	rx #(routerid,"local") rx_l
 // 	(
 // 		.clk(clk), .reset(reset),
-// 		.channel_busy(rx_l_busy), .serial_in (rx_l_data),
+// 		.channel_busy(rx_l_busy), .serial_in (rx_data_l),
 // 		.valid(valid[`LOCAL]), .parallel_out(item[`LOCAL]), .item_read(item_read[`LOCAL])
 // 	);		 	 	 		 
 // 	
@@ -146,7 +146,7 @@ module par_router (clk, reset, rx_busy, rx_data, rx_l_data, rx_l_valid, tx_busy,
 	
 	 // parallel for local port
 	 par_rx_logic rx_l(.item_out(fifo_item_in[`LOCAL]), .write(write[`LOCAL]), .full(full[`LOCAL]), 
-			.valid(rx_l_valid), .item_in(rx_l_data), .item_read(item_read[`LOCAL]), .busy(rx_l_busy)
+			.valid(rx_valid_l), .item_in(rx_data_l), .item_read(item_read[`LOCAL]), .busy(rx_l_busy)
 		);
 		
 		
@@ -190,7 +190,7 @@ module par_router (clk, reset, rx_busy, rx_data, rx_l_data, rx_l_valid, tx_busy,
 		.e_item_in(fifo_item_out[`EAST ]), .e_read(read[`EAST ]), .e_empty(empty[`EAST ]), .e_item_out(rr_item_out[`EAST ]), .e_ena(e_ena), .e_busy(e_busy),
 		.s_item_in(fifo_item_out[`SOUTH]), .s_read(read[`SOUTH]), .s_empty(empty[`SOUTH]), .s_item_out(rr_item_out[`SOUTH]), .s_ena(s_ena), .s_busy(s_busy),
 		.w_item_in(fifo_item_out[`WEST ]), .w_read(read[`WEST ]), .w_empty(empty[`WEST ]), .w_item_out(rr_item_out[`WEST ]), .w_ena(w_ena), .w_busy(w_busy),
-		.l_item_in(fifo_item_out[`LOCAL]), .l_read(read[`LOCAL]), .l_empty(empty[`LOCAL]), .l_item_out(tx_l_data), .l_ena(tx_l_valid), .l_busy(tx_l_busy)
+		.l_item_in(fifo_item_out[`LOCAL]), .l_read(read[`LOCAL]), .l_empty(empty[`LOCAL]), .l_item_out(tx_data_l), .l_ena(tx_valid_l), .l_busy(tx_l_busy)
 		);
 		
 			

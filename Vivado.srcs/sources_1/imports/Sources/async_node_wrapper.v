@@ -273,12 +273,12 @@
 		      .reset(reset), 
 		      .rx_busy(rx_busy), 
 		      .rx_data(rx_data), 
-		      .rx_l_data(rx_data_l), 
-		      .rx_l_valid(rx_valid_l), 
+		      .rx_data_l(rx_data_l), 
+		      .rx_valid_l(rx_valid_l), 
 		      .tx_busy(tx_busy), 
 		      .tx_data(tx_data), 
-		      .tx_l_data(tx_data_l), 
-		      .tx_l_valid(tx_valid_l), 
+		      .tx_data_l(tx_data_l), 
+		      .tx_valid_l(tx_valid_l), 
 		      .flit_counter(flit_counter)
 		      
 		      );	

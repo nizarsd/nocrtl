@@ -43,7 +43,7 @@ module testbench();
 	// routing tables:
 	// -----------------------------------------------------------------	
 	
-	wire [`ADDR_BITS-1:0] table_addr;
+	wire [`ADDR_SZ-1:0] table_addr;
 	
 	wire [`BITS_DIR-1:0] table_data;
 

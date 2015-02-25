@@ -11,7 +11,7 @@ module fifo(clk, reset, full, empty, item_in, item_out, write, read);
 	
 	output full, empty;
 	
-	reg [`PAYLOAD_SIZE+`ADDR_BITS-1:0] mem [`FIFO_DEPTH-1:0];
+	reg [`PAYLOAD_SIZE+`ADDR_SZ-1:0] mem [`FIFO_DEPTH-1:0];
 	
 	reg [`FIFO_DEPTH_LOG2-1:0] read_ptr;
 	
@@ -23,9 +23,9 @@ module fifo(clk, reset, full, empty, item_in, item_out, write, read);
 	
 	reg [`FIFO_DEPTH_LOG2:0] count;
 	
-	input [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_in;
+	input [`PAYLOAD_SIZE+`ADDR_SZ-1:0] item_in;
 	
-	output [`PAYLOAD_SIZE+`ADDR_BITS-1:0] item_out;
+	output [`PAYLOAD_SIZE+`ADDR_SZ-1:0] item_out;
 	
 	reg full, empty;
 	

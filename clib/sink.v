@@ -7,7 +7,7 @@ module serial_sink (clk, reset, channel_busy, serial_in, throughput);
 	output reg [25:0]throughput;
 	output channel_busy;
 	
-	wire [`ADDR_BITS-1:0] data;
+	wire [`ADDR_SZ-1:0] data;
 	
 	sink s1 (.clk(clk), .reset(reset), .data(data), .req(req), .busy(busy), .throughput(throughput));
 
@@ -21,9 +21,9 @@ module sink (clk, reset, data, req, busy, throughput);
 	
 	output busy; assign busy = 0;
 	
-	input [`ADDR_BITS-1:0] data;
+	input [`ADDR_SZ-1:0] data;
 	
-	reg [`ADDR_BITS-1:0] register;
+	reg [`ADDR_SZ-1:0] register;
 	
 	always @(posedge clk or posedge reset) begin
 	
@@ -45,9 +45,9 @@ module sink (clk, reset, data, req, busy, throughput);
 	
 	reg [25:0]sampler;
 	
-	input [`ADDR_BITS-1:0] data;
+	input [`ADDR_SZ-1:0] data;
 	
-	reg [`ADDR_BITS-1:0] register;
+	reg [`ADDR_SZ-1:0] register;
 	
 	reg busy;
 	

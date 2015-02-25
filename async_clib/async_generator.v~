@@ -3,7 +3,7 @@
 
 module async_gen(clk, reset, send);
 	parameter SIM_CYLES =10000;
-	parameter COOLDOWN_CYCLES = 14000;
+	parameter COOLDOWN_CYCLES = 20000;
 
 	output [`NUM_NODES-1 : 0] clk;
 	output reset, send;

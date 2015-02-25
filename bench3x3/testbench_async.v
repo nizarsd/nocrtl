@@ -2,22 +2,17 @@
 
 `include "constants.v"
 `include "../par_clib/fifo.v"
-`include "../par_clib/routing_logic_v3.v"
-// `include "../par_clib/routing_logic_v1.v"
-// `include "../par_clib/par_rx.v"
-// `include "../par_clib/par_tx.v"
+`include "../par_clib/routing_logic_v4.v"
 `include "../par_clib/par_source_traffic.v"
 // `include "../par_clib/par_source_data.v"
-`include "../par_clib/par_rx_logic.v"
+// `include "../par_clib/par_rx_logic.v"
 `include "../par_clib/par_moody_sink.v"
 `include "../par_clib/routing_table_comb.v"	
 `include "../par_clib/rr_arbiter.v"
-`include "../par_clib/ch_rx_logic.v"
-
 
 `include "../async_clib/dclk_rx5.v"
 `include "../async_clib/dclk_tx.v"
-`include "../async_clib/async_router.v"
+`include "../async_clib/async_router2.v"
 `include "../async_clib/async_generator.v"
 	
 module testbench(); 
@@ -38,10 +33,10 @@ module testbench();
 	wire [`DIRECTIONS-1:0] tx_busy [`NUM_NODES-1:0];
 	wire [`DIRECTIONS-2:0] tx_data [`NUM_NODES-1:0];
 	
-	wire  rx_l_valid [`NUM_NODES-1:0];
-	wire  tx_l_valid [`NUM_NODES-1:0];
-	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  rx_l_data [`NUM_NODES-1:0];
-	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  tx_l_data [`NUM_NODES-1:0];
+	wire  rx_valid_l [`NUM_NODES-1:0];
+	wire  tx_valid_l [`NUM_NODES-1:0];
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  rx_data_l [`NUM_NODES-1:0];
+	wire [`HDR_SZ + `PL_SZ + `ADDR_SZ-1:0]  tx_data_l [`NUM_NODES-1:0];
 	
 	wire router_active [`NUM_NODES-1:0];
 	wire [19:0] flit_counter [`NUM_NODES-1:0];
@@ -62,31 +57,31 @@ module testbench();
 // 	endgenerate
 	
 	async_router  
-	  router0 (0, clk[0], wclk[0], clk_fw[0], reset, rx_busy[0], rx_data[0], rx_l_data[0], rx_l_valid[0], tx_busy[0], tx_data[0], tx_l_data[0], tx_l_valid[0], flit_counter[0]);	
+	  router0 (0, clk[0], wclk[0], clk_fw[0], reset, rx_busy[0], rx_data[0], rx_data_l[0], rx_valid_l[0], tx_busy[0], tx_data[0], tx_data_l[0], tx_valid_l[0], flit_counter[0]);	
 	
 	async_router  
-	  router1 (1, clk[1], wclk[1], clk_fw[1], reset, rx_busy[1], rx_data[1], rx_l_data[1], rx_l_valid[1], tx_busy[1], tx_data[1], tx_l_data[1], tx_l_valid[1], flit_counter[1]);	
+	  router1 (1, clk[1], wclk[1], clk_fw[1], reset, rx_busy[1], rx_data[1], rx_data_l[1], rx_valid_l[1], tx_busy[1], tx_data[1], tx_data_l[1], tx_valid_l[1], flit_counter[1]);	
 	
 	async_router  
-	  router2 (2, clk[2], wclk[2], clk_fw[2], reset, rx_busy[2], rx_data[2], rx_l_data[2], rx_l_valid[2], tx_busy[2], tx_data[2], tx_l_data[2], tx_l_valid[2], flit_counter[2]);	
+	  router2 (2, clk[2], wclk[2], clk_fw[2], reset, rx_busy[2], rx_data[2], rx_data_l[2], rx_valid_l[2], tx_busy[2], tx_data[2], tx_data_l[2], tx_valid_l[2], flit_counter[2]);	
 	
 	async_router  
-	  router3 (3, clk[3], wclk[3], clk_fw[3], reset, rx_busy[3], rx_data[3], rx_l_data[3], rx_l_valid[3], tx_busy[3], tx_data[3], tx_l_data[3], tx_l_valid[3], flit_counter[3]);	
+	  router3 (3, clk[3], wclk[3], clk_fw[3], reset, rx_busy[3], rx_data[3], rx_data_l[3], rx_valid_l[3], tx_busy[3], tx_data[3], tx_data_l[3], tx_valid_l[3], flit_counter[3]);	
 	
 	async_router  
-	  router4 (4, clk[4], wclk[4], clk_fw[4], reset, rx_busy[4], rx_data[4], rx_l_data[4], rx_l_valid[4], tx_busy[4], tx_data[4], tx_l_data[4], tx_l_valid[4], flit_counter[4]);	
+	  router4 (4, clk[4], wclk[4], clk_fw[4], reset, rx_busy[4], rx_data[4], rx_data_l[4], rx_valid_l[4], tx_busy[4], tx_data[4], tx_data_l[4], tx_valid_l[4], flit_counter[4]);	
 	
 	async_router  
-	  router5 (5, clk[5], wclk[5], clk_fw[5], reset, rx_busy[5], rx_data[5], rx_l_data[5], rx_l_valid[5], tx_busy[5], tx_data[5], tx_l_data[5], tx_l_valid[5], flit_counter[5]);	
+	  router5 (5, clk[5], wclk[5], clk_fw[5], reset, rx_busy[5], rx_data[5], rx_data_l[5], rx_valid_l[5], tx_busy[5], tx_data[5], tx_data_l[5], tx_valid_l[5], flit_counter[5]);	
 	
 	async_router  
-	  router6 (6, clk[6], wclk[6], clk_fw[6], reset, rx_busy[6], rx_data[6], rx_l_data[6], rx_l_valid[6], tx_busy[6], tx_data[6], tx_l_data[6], tx_l_valid[6], flit_counter[6]);	
+	  router6 (6, clk[6], wclk[6], clk_fw[6], reset, rx_busy[6], rx_data[6], rx_data_l[6], rx_valid_l[6], tx_busy[6], tx_data[6], tx_data_l[6], tx_valid_l[6], flit_counter[6]);	
 	
 	async_router  
-	  router7 (7, clk[7], wclk[7], clk_fw[7], reset, rx_busy[7], rx_data[7], rx_l_data[7], rx_l_valid[7], tx_busy[7], tx_data[7], tx_l_data[7], tx_l_valid[7], flit_counter[7]);	
+	  router7 (7, clk[7], wclk[7], clk_fw[7], reset, rx_busy[7], rx_data[7], rx_data_l[7], rx_valid_l[7], tx_busy[7], tx_data[7], tx_data_l[7], tx_valid_l[7], flit_counter[7]);	
 	
 	async_router  
-	  router8 (8, clk[8], wclk[8], clk_fw[8], reset, rx_busy[8], rx_data[8], rx_l_data[8], rx_l_valid[8], tx_busy[8], tx_data[8], tx_l_data[8], tx_l_valid[8], flit_counter[8]);	
+	  router8 (8, clk[8], wclk[8], clk_fw[8], reset, rx_busy[8], rx_data[8], rx_data_l[8], rx_valid_l[8], tx_busy[8], tx_data[8], tx_data_l[8], tx_valid_l[8], flit_counter[8]);	
 	
 	
 
